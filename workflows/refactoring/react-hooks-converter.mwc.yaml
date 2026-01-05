@@ -1,0 +1,22 @@
+name: "React Hooks Converter"
+version: "1.0.0"
+description: "Migrate React class components to functional components using Hooks"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: class_component
+    type: string
+    description: "The React class component code"
+
+steps:
+  - id: map_lifecycle
+    type: model_call
+    prompt: "Identify lifecycle methods (componentDidMount, etc.) and state in this class component and map them to React Hooks (useEffect, useState):\n\n{{class_component}}"
+
+  - id: convert_to_functional
+    type: model_call
+    prompt: "Convert the class component to a functional component using the mapping: {{map_lifecycle}}. Ensure all logic is preserved."
+
+outputs:
+  - name: functional_component
+    type: string

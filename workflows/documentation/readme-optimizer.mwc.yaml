@@ -1,0 +1,25 @@
+name: "README Optimizer"
+version: "1.0.0"
+description: "Enhance project README with clear structure, installation steps, and usage examples"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: current_readme
+    type: string
+    description: "The existing README content"
+  - name: project_context
+    type: string
+    description: "Brief description of what the project does"
+
+steps:
+  - id: analyze_gaps
+    type: model_call
+    prompt: "Analyze the current README for missing essential sections like Installation, Usage, Contributing, and License based on this context: {{project_context}}\n\nREADME:\n{{current_readme}}"
+
+  - id: generate_optimized_readme
+    type: model_call
+    prompt: "Rewrite the README to be more professional, clear, and comprehensive, filling in the gaps identified: {{analyze_gaps}}."
+
+outputs:
+  - name: optimized_readme
+    type: string

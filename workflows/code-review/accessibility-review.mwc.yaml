@@ -1,0 +1,22 @@
+name: "Accessibility Review"
+version: "1.0.0"
+description: "Review UI code for ARIA standards and accessibility best practices"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: component_code
+    type: string
+    description: "The UI component code to review"
+
+steps:
+  - id: check_aria
+    type: model_call
+    prompt: "Check the following code for proper ARIA roles, attributes, and semantic HTML:\n\n{{component_code}}"
+
+  - id: check_contrast_and_labels
+    type: model_call
+    prompt: "Identify potential accessibility issues related to color contrast (if visible), form labels, and alt text in:\n\n{{component_code}}"
+
+outputs:
+  - name: accessibility_report
+    type: string

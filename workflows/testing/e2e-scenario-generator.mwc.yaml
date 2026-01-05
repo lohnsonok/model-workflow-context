@@ -1,0 +1,26 @@
+name: "E2E Scenario Generator"
+version: "1.0.0"
+description: "Generate E2E test scenarios (Playwright/Cypress) from user stories"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: user_story
+    type: string
+    description: "The user story or feature description"
+  - name: target_framework
+    type: string
+    description: "Target framework (playwright, cypress)"
+    default: "playwright"
+
+steps:
+  - id: analyze_story
+    type: model_call
+    prompt: "Analyze this user story and identify key interaction paths for E2E testing:\n\n{{user_story}}"
+
+  - id: generate_scenarios
+    type: model_call
+    prompt: "Based on the analysis: {{analyze_story}}, generate complete E2E test scenarios using {{target_framework}}."
+
+outputs:
+  - name: e2e_scenarios
+    type: string

@@ -1,0 +1,31 @@
+name: "i18n Extractor"
+version: "1.0.0"
+description: "Automatically extract hardcoded strings into i18n translation files"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_file
+    type: path
+    description: "The file to extract strings from"
+  - name: target_locale
+    type: string
+    description: "The target locale (e.g., en, fr, es)"
+
+steps:
+  - id: find_strings
+    type: model_call
+    prompt: "Identify all hardcoded user-facing strings in {{source_file}} that should be translated."
+
+  - id: generate_keys
+    type: model_call
+    prompt: "Generate unique i18n keys for each identified string and format them as a JSON object for the {{target_locale}} locale."
+
+  - id: suggest_replacements
+    type: model_call
+    prompt: "Show how the code in {{source_file}} should be modified to use the new i18n keys (e.g., using t('key')). "
+
+outputs:
+  - name: translation_json
+    type: json
+  - name: code_changes
+    type: string

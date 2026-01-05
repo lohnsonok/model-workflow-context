@@ -1,0 +1,26 @@
+name: "Performance Audit"
+version: "1.0.0"
+description: "Analyze code for performance bottlenecks and memory leaks"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_code
+    type: string
+    description: "The code to analyze for performance"
+
+steps:
+  - id: analyze_complexity
+    type: model_call
+    prompt: "Analyze the time and space complexity of the following code and identify any O(n^2) or worse operations:\n\n{{source_code}}"
+
+  - id: find_leaks
+    type: model_call
+    prompt: "Look for potential memory leaks, such as unclosed resources, event listeners not removed, or global variables in the following code:\n\n{{source_code}}"
+
+  - id: suggest_optimizations
+    type: model_call
+    prompt: "Based on the complexity and leak analysis, suggest 3 specific optimizations to improve the performance of this code."
+
+outputs:
+  - name: performance_report
+    type: markdown
