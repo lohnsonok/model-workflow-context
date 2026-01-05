@@ -1,0 +1,25 @@
+name: "Tutorial Generator"
+version: "1.0.0"
+description: "Transform complex code or features into a step-by-step technical tutorial"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: feature_code
+    type: string
+    description: "The code or feature logic to explain"
+  - name: target_level
+    type: string
+    description: "Target audience level (Beginner, Intermediate, Advanced)"
+
+steps:
+  - id: outline_tutorial
+    type: model_call
+    prompt: "Create a 5-step outline to teach someone how to use this feature: {{feature_code}}. Adjust for {{target_level}} level."
+
+  - id: write_tutorial
+    type: model_call
+    prompt: "Write the full tutorial based on the outline: {{outline_tutorial}}. Include code snippets and clear explanations."
+
+outputs:
+  - name: technical_tutorial
+    type: string

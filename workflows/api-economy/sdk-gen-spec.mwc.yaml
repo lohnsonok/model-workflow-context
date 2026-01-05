@@ -1,0 +1,14 @@
+name: "SDK Generator Spec"
+version: "1.0.0"
+description: "Generate a specification for building multi-language SDKs from an OpenAPI doc"
+mwc_version: "1.0.0"
+inputs:
+  - name: openapi_spec
+    type: string
+steps:
+  - id: define_sdk_structure
+    type: model_call
+    prompt: "Outline the folder structure and core classes for a TypeScript/Python SDK based on this spec: {{openapi_spec}}."
+outputs:
+  - name: sdk_spec
+    type: string

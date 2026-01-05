@@ -1,0 +1,26 @@
+name: "OSS Maintainer Helper"
+version: "1.0.0"
+description: "Draft professional, polite, and constructive responses to GitHub Issues and Pull Requests"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: issue_content
+    type: string
+    description: "The content of the issue or PR comment"
+  - name: project_tone
+    type: string
+    description: "Friendly, Formal, or Technical"
+    default: "Friendly"
+
+steps:
+  - id: analyze_sentiment
+    type: model_call
+    prompt: "Identify the main request or problem in: {{issue_content}}. Is it a bug report, feature request, or support question?"
+
+  - id: draft_response
+    type: model_call
+    prompt: "Write a {{project_tone}} response that acknowledges the contributor, addresses {{analyze_sentiment}}, and outlines the next steps (e.g., more info needed, accepted, or rejected)."
+
+outputs:
+  - name: maintainer_response
+    type: string

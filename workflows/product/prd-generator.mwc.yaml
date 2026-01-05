@@ -1,0 +1,25 @@
+name: "PRD Generator"
+version: "1.0.0"
+description: "Transform a feature idea into a comprehensive Product Requirements Document (PRD)"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: feature_idea
+    type: string
+    description: "The initial feature concept or rough notes"
+  - name: target_audience
+    type: string
+    description: "Who is this feature for?"
+
+steps:
+  - id: define_problem
+    type: model_call
+    prompt: "Define the problem statement, user pain points, and success metrics for this feature: {{feature_idea}} for {{target_audience}}."
+
+  - id: outline_specs
+    type: model_call
+    prompt: "Create detailed functional requirements, user stories, and technical constraints based on the problem definition: {{define_problem}}."
+
+outputs:
+  - name: prd_document
+    type: string

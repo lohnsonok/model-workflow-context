@@ -1,0 +1,14 @@
+name: "Legacy Wrapper Generator"
+version: "1.0.0"
+description: "Generate a modern REST/gRPC wrapper around a legacy CLI or library"
+mwc_version: "1.0.0"
+inputs:
+  - name: legacy_interface_desc
+    type: string
+steps:
+  - id: draft_wrapper
+    type: model_call
+    prompt: "Write a Node.js wrapper that exposes {{legacy_interface_desc}} as a clean REST API."
+outputs:
+  - name: wrapper_code
+    type: string

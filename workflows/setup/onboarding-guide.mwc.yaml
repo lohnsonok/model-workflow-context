@@ -1,0 +1,25 @@
+name: "Onboarding Guide"
+version: "1.0.0"
+description: "Generate a step-by-step onboarding guide for a new developer based on the codebase"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: project_structure
+    type: string
+    description: "Main folders and technology stack"
+  - name: setup_commands
+    type: string
+    description: "Commands to run for local setup"
+
+steps:
+  - id: analyze_project
+    type: model_call
+    prompt: "Create a 30-minute onboarding overview for a new joiner. Explain the core architecture and where the most important logic lives based on: {{project_structure}}"
+
+  - id: setup_checklist
+    type: model_call
+    prompt: "Create a technical setup checklist (Environment variables, Docker, DB init) using these commands: {{setup_commands}}"
+
+outputs:
+  - name: onboarding_md
+    type: string

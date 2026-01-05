@@ -1,0 +1,22 @@
+name: "License Compliance Audit"
+version: "1.0.0"
+description: "Scan dependency list for restrictive licenses (GPL, etc.) and legal risks"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: dependency_list
+    type: string
+    description: "List of project dependencies and their licenses"
+
+steps:
+  - id: identify_risky_licenses
+    type: model_call
+    prompt: "Identify any 'Copyleft' or highly restrictive licenses (like GPL-3.0, AGPL) in this list: {{dependency_list}} that might require the project to be open-sourced."
+
+  - id: legal_recommendations
+    type: model_call
+    prompt: "Provide recommendations for alternatives to the risky packages identified in: {{identify_risky_licenses}}."
+
+outputs:
+  - name: legal_compliance_report
+    type: string

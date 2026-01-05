@@ -1,0 +1,14 @@
+name: "Flashcard Creator"
+version: "1.0.0"
+description: "Convert a text document into a set of Anki-style flashcards"
+mwc_version: "1.0.0"
+inputs:
+  - name: study_notes
+    type: string
+steps:
+  - id: generate_cards
+    type: model_call
+    prompt: "Extract the most important facts from these notes: {{study_notes}} and format them as Front/Back flashcards."
+outputs:
+  - name: flashcards_list
+    type: string

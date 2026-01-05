@@ -1,0 +1,14 @@
+name: "Exit Interview Generator"
+version: "1.0.0"
+description: "Generate a set of empathetic and insightful exit interview questions"
+mwc_version: "1.0.0"
+inputs:
+  - name: leaving_reason
+    type: string
+steps:
+  - id: create_questions
+    type: model_call
+    prompt: "Draft 10 exit interview questions tailored to an employee leaving for: {{leaving_reason}}."
+outputs:
+  - name: interview_questions
+    type: string

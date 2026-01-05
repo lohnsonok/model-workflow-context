@@ -1,0 +1,14 @@
+name: "Goal Tracker (OKR)"
+version: "1.0.0"
+description: "Define and track Objectives and Key Results (OKRs) for a team or project"
+mwc_version: "1.0.0"
+inputs:
+  - name: project_vision
+    type: string
+steps:
+  - id: define_okrs
+    type: model_call
+    prompt: "Based on the vision: {{project_vision}}, define 3 high-impact Objectives each with 2 measurable Key Results."
+outputs:
+  - name: okr_plan
+    type: string

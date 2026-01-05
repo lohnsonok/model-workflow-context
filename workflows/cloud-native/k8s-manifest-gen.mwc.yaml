@@ -1,0 +1,30 @@
+name: "K8s Manifest Generator"
+version: "1.0.0"
+description: "Generate Kubernetes Deployment, Service, and Ingress manifests for a microservice"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: app_name
+    type: string
+  - name: container_image
+    type: string
+  - name: port
+    type: string
+    default: "8080"
+
+steps:
+  - id: generate_deployment
+    type: model_call
+    prompt: "Generate a production-ready K8s Deployment YAML for {{app_name}} using image {{container_image}}. Include resource limits and liveness/readiness probes."
+
+  - id: generate_networking
+    type: model_call
+    prompt: "Generate Service and Ingress YAMLs for {{app_name}} on port {{port}}. Use standard annotations for Nginx ingress."
+
+  - id: aggregate_manifests
+    type: model_call
+    prompt: "Combine the following Kubernetes manifests into a single multi-document YAML file, separated by ---:\n\n{{generate_deployment}}\n\n{{generate_networking}}"
+
+outputs:
+  - name: k8s_manifests
+    type: string

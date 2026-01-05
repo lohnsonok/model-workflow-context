@@ -1,0 +1,20 @@
+name: "Carbon Footprint Audit"
+version: "1.0.0"
+description: "Estimate the carbon footprint of a cloud architecture based on resource usage"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: infra_details
+    type: string
+
+steps:
+  - id: estimate_emissions
+    type: model_call
+    prompt: "Estimate the monthly CO2 emissions for this infrastructure: {{infra_details}}. Use average cloud provider intensity factors."
+  - id: suggest_green_alternatives
+    type: model_call
+    prompt: "Suggest architectural changes to reduce energy consumption (e.g., serverless, ARM instances) based on: {{estimate_emissions}}."
+
+outputs:
+  - name: green_it_report
+    type: string

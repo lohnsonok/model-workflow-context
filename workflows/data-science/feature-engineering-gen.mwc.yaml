@@ -1,0 +1,14 @@
+name: "Feature Engineering Suggestor"
+version: "1.0.0"
+description: "Suggest new features for a machine learning model based on the raw dataset columns"
+mwc_version: "1.0.0"
+inputs:
+  - name: dataset_schema
+    type: string
+steps:
+  - id: suggest_features
+    type: model_call
+    prompt: "Based on these columns: {{dataset_schema}}, suggest 5 feature engineering ideas (e.g., interaction terms, time-based features)."
+outputs:
+  - name: feature_ideas
+    type: string

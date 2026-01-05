@@ -1,0 +1,28 @@
+name: "SQL Optimizer"
+version: "1.0.0"
+description: "Analyze SQL queries for performance, indexing, and anti-patterns"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: sql_query
+    type: string
+    description: "The SQL query to optimize"
+  - name: database_engine
+    type: string
+    description: "Target DB (PostgreSQL, MySQL, etc.)"
+    default: "PostgreSQL"
+
+steps:
+  - id: analyze_query
+    type: model_call
+    prompt: "Analyze this {{database_engine}} query for potential performance issues (e.g., full table scans, N+1, missing indexes):\n\n{{sql_query}}"
+
+  - id: optimize_query
+    type: model_call
+    prompt: "Provide an optimized version of the query based on: {{analyze_query}}. Include suggestions for indexes if applicable."
+
+outputs:
+  - name: optimized_sql
+    type: string
+  - name: index_suggestions
+    type: string

@@ -1,0 +1,16 @@
+name: "SLAM Configuration Auditor"
+version: "1.0.0"
+description: "Audit SLAM (Simultaneous Localization and Mapping) parameters for a mobile robot"
+mwc_version: "1.0.0"
+inputs:
+  - name: slam_params
+    type: string
+  - name: environment_type
+    type: string
+steps:
+  - id: check_consistency
+    type: model_call
+    prompt: "Evaluate these SLAM parameters: {{slam_params}} for a {{environment_type}} environment. Check for loop closure thresholds and resolution."
+outputs:
+  - name: slam_audit_report
+    type: string

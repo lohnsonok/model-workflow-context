@@ -1,0 +1,17 @@
+name: "API Design Review"
+version: "1.0.0"
+description: "Review API designs for REST/GraphQL best practices and consistency"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: api_spec
+    type: string
+
+steps:
+  - id: check_best_practices
+    type: model_call
+    prompt: "Review this API specification for naming conventions, status codes, and security patterns: {{api_spec}}."
+
+outputs:
+  - name: api_review_report
+    type: string

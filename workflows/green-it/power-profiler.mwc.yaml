@@ -1,0 +1,14 @@
+name: "Power Consumption Profiler"
+version: "1.0.0"
+description: "Analyze code patterns for excessive energy consumption in mobile or embedded devices"
+mwc_version: "1.0.0"
+inputs:
+  - name: code_snippet
+    type: string
+steps:
+  - id: find_energy_hogs
+    type: model_call
+    prompt: "Identify energy-inefficient patterns (polling, unnecessary wake locks, high-frequency GPS) in this code: {{code_snippet}}."
+outputs:
+  - name: energy_profile_report
+    type: string

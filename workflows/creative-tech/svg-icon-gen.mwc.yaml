@@ -1,0 +1,14 @@
+name: "SVG Icon Generator"
+version: "1.0.0"
+description: "Generate clean, optimized SVG code for UI icons based on a description"
+mwc_version: "1.0.0"
+inputs:
+  - name: icon_description
+    type: string
+steps:
+  - id: generate_svg
+    type: model_call
+    prompt: "Create a simple, minimalist SVG icon for: {{icon_description}}. Use a 24x24 viewbox and clean paths."
+outputs:
+  - name: svg_code
+    type: string

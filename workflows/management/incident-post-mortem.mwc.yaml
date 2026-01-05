@@ -1,0 +1,25 @@
+name: "Incident Post-Mortem"
+version: "1.0.0"
+description: "Guide the team through creating a blameless post-mortem report after a technical incident"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: incident_timeline
+    type: string
+    description: "Sequence of events during the incident"
+  - name: technical_root_cause
+    type: string
+    description: "What actually failed technically"
+
+steps:
+  - id: analyze_impact
+    type: model_call
+    prompt: "Based on the timeline: {{incident_timeline}}, describe the user impact and the duration of the outage."
+
+  - id: identify_preventative_actions
+    type: model_call
+    prompt: "Given the root cause: {{technical_root_cause}}, suggest 5 preventative actions to ensure this type of incident doesn't happen again."
+
+outputs:
+  - name: post_mortem_draft
+    type: string

@@ -1,0 +1,22 @@
+name: "SLO/SLI Generator"
+version: "1.0.0"
+description: "Define Service Level Objectives (SLOs) and Indicators (SLIs) for a microservice"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: service_description
+    type: string
+    description: "What the service does and its critical path"
+
+steps:
+  - id: identify_sli
+    type: model_call
+    prompt: "Identify the top 3 Service Level Indicators (Availability, Latency, Error Rate) for: {{service_description}}."
+
+  - id: define_slo
+    type: model_call
+    prompt: "Set realistic targets (e.g., 99.9%) and error budgets for the SLIs identified: {{identify_sli}}."
+
+outputs:
+  - name: slo_sli_spec
+    type: string

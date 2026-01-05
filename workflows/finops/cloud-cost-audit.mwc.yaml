@@ -1,0 +1,22 @@
+name: "Cloud Cost Audit"
+version: "1.0.0"
+description: "Analyze cloud resource usage and identify cost-saving opportunities (FinOps)"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: resource_list
+    type: string
+    description: "List of active cloud resources (EC2, RDS, S3, etc.) and their specs"
+
+steps:
+  - id: identify_waste
+    type: model_call
+    prompt: "Identify underutilized or 'zombie' resources in the following list: {{resource_list}}. Look for oversized instances or unused storage."
+
+  - id: suggest_savings
+    type: model_call
+    prompt: "Suggest specific cost-saving actions (e.g., Reserved Instances, Spot Instances, rightsizing) based on: {{identify_waste}}."
+
+outputs:
+  - name: cost_saving_report
+    type: string

@@ -1,0 +1,29 @@
+name: "Bug Fixer Agent"
+version: "1.0.0"
+description: "Analyze a bug report and suggest a fix"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: error_message
+    type: string
+    description: "The error message or stack trace"
+  - name: relevant_code
+    type: string
+    description: "The code suspected to contain the bug"
+
+steps:
+  - id: analyze_error
+    type: model_call
+    prompt: "Analyze this error message: {{error_message}}. Explain what is likely causing it in the context of this code:\n\n{{relevant_code}}"
+
+  - id: propose_fix
+    type: model_call
+    prompt: "Based on the analysis in {{analyze_error}}, propose a specific code fix to resolve the error in {{relevant_code}}. Ensure the fix handles edge cases."
+
+  - id: verify_fix
+    type: model_call
+    prompt: "Based on the proposed fix: {{propose_fix}}, explain how to verify that this fix works (e.g., what test case to run)."
+
+outputs:
+  - name: fix_suggestion
+    type: markdown

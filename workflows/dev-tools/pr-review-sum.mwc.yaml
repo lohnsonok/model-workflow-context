@@ -1,0 +1,14 @@
+name: "PR Review Summarizer"
+version: "1.0.0"
+description: "Summarize complex Pull Request reviews into actionable feedback for the developer"
+mwc_version: "1.0.0"
+inputs:
+  - name: pr_comments
+    type: string
+steps:
+  - id: summarize_feedback
+    type: model_call
+    prompt: "Extract the critical changes requested in these PR comments: {{pr_comments}}. Ignore minor nits."
+outputs:
+  - name: action_items
+    type: string

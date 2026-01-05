@@ -1,0 +1,16 @@
+name: "Grading Assistant"
+version: "1.0.0"
+description: "Provide constructive feedback and a preliminary grade based on a rubric"
+mwc_version: "1.0.0"
+inputs:
+  - name: student_submission
+    type: string
+  - name: rubric
+    type: string
+steps:
+  - id: evaluate_submission
+    type: model_call
+    prompt: "Evaluate this submission: {{student_submission}} against the following rubric: {{rubric}}. Provide strengths, weaknesses, and a suggested grade."
+outputs:
+  - name: feedback_report
+    type: string

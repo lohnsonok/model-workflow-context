@@ -1,0 +1,16 @@
+name: "Green Cloud Policy Generator"
+version: "1.0.0"
+description: "Generate a corporate policy for sustainable cloud resource management"
+mwc_version: "1.0.0"
+inputs:
+  - name: company_size
+    type: string
+  - name: cloud_providers
+    type: string
+steps:
+  - id: draft_policy
+    type: model_call
+    prompt: "Create a 'Green Cloud Policy' for a {{company_size}} company using {{cloud_providers}}. Focus on automated shutdown of dev envs and region selection based on carbon intensity."
+outputs:
+  - name: green_policy_draft
+    type: string

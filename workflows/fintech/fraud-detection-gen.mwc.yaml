@@ -1,0 +1,20 @@
+name: "Fraud Detection Logic"
+version: "1.0.0"
+description: "Generate rule-based or ML-ready fraud detection logic for transaction processing"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: transaction_schema
+    type: string
+
+steps:
+  - id: define_rules
+    type: model_call
+    prompt: "Identify 5 common fraud patterns (velocity, location mismatch, etc.) for this schema: {{transaction_schema}}."
+  - id: generate_code
+    type: model_call
+    prompt: "Implement the detection logic in Python based on the rules: {{define_rules}}."
+
+outputs:
+  - name: detection_logic
+    type: string

@@ -1,0 +1,25 @@
+name: "Prompt Optimizer"
+version: "1.0.0"
+description: "Refine and optimize LLM prompts using Chain-of-Thought and few-shot techniques"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: raw_prompt
+    type: string
+    description: "The initial prompt to optimize"
+  - name: desired_output_format
+    type: string
+    description: "JSON, Markdown, Code, etc."
+
+steps:
+  - id: apply_cot
+    type: model_call
+    prompt: "Rebuild the prompt {{raw_prompt}} to include 'Chain-of-Thought' instructions to improve reasoning."
+
+  - id: add_examples
+    type: model_call
+    prompt: "Take the optimized prompt from {{apply_cot}} and add 2-3 high-quality few-shot examples to ensure the output matches the format: {{desired_output_format}}."
+
+outputs:
+  - name: optimized_prompt
+    type: string

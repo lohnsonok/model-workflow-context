@@ -1,0 +1,20 @@
+name: "Quiz Generator"
+version: "1.0.0"
+description: "Generate educational quizzes from course material or documentation"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_material
+    type: string
+  - name: difficulty
+    type: enum
+    values: ["easy", "medium", "hard"]
+
+steps:
+  - id: generate_questions
+    type: model_call
+    prompt: "Create 5 multiple-choice questions with 4 options each from: {{source_material}}. Difficulty: {{difficulty}}."
+
+outputs:
+  - name: quiz_json
+    type: string

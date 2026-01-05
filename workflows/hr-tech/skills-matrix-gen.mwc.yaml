@@ -1,0 +1,14 @@
+name: "Skills Matrix Generator"
+version: "1.0.0"
+description: "Generate a skills matrix for a technical team to identify knowledge gaps"
+mwc_version: "1.0.0"
+inputs:
+  - name: team_members_and_roles
+    type: string
+steps:
+  - id: draft_matrix
+    type: model_call
+    prompt: "Create a skills matrix template for: {{team_members_and_roles}}. List core competencies and proficiency levels."
+outputs:
+  - name: skills_matrix_template
+    type: string

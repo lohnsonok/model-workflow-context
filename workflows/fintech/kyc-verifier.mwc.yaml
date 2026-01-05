@@ -1,0 +1,14 @@
+name: "KYC Verifier Logic"
+version: "1.0.0"
+description: "Generate logic for automated Know Your Customer (KYC) document verification"
+mwc_version: "1.0.0"
+inputs:
+  - name: id_document_data
+    type: string
+steps:
+  - id: verify_fields
+    type: model_call
+    prompt: "Verify the consistency of these ID document fields: {{id_document_data}}. Check for expiration dates and checksums."
+outputs:
+  - name: kyc_report
+    type: string

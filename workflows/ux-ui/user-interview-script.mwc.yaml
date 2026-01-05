@@ -1,0 +1,25 @@
+name: "User Interview Script"
+version: "1.0.0"
+description: "Generate a non-biased user interview script for product discovery"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: discovery_goal
+    type: string
+    description: "What do you want to learn from users?"
+  - name: user_persona
+    type: string
+    description: "Type of user you are interviewing"
+
+steps:
+  - id: generate_questions
+    type: model_call
+    prompt: "Generate 10 open-ended, non-leading interview questions to achieve this goal: {{discovery_goal}}. Target persona: {{user_persona}}."
+
+  - id: interview_structure
+    type: model_call
+    prompt: "Organize the questions into a logical interview flow: Introduction, Warm-up, Core Discovery, and Wrap-up."
+
+outputs:
+  - name: interview_script
+    type: string

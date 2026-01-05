@@ -1,0 +1,14 @@
+name: "Landing Page Wireframe"
+version: "1.0.0"
+description: "Generate a structural outline for a high-converting landing page"
+mwc_version: "1.0.0"
+inputs:
+  - name: campaign_goal
+    type: string
+steps:
+  - id: draft_structure
+    type: model_call
+    prompt: "Outline the sections (Hero, Social Proof, Features, CTA) for a landing page focused on: {{campaign_goal}}."
+outputs:
+  - name: wireframe_outline
+    type: string

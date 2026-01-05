@@ -1,0 +1,25 @@
+name: "Release Notes Automator"
+version: "1.0.0"
+description: "Generate user-friendly release notes from a list of technical changes or commits"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: technical_changes
+    type: string
+    description: "Git log, commit messages, or technical list of changes"
+  - name: release_version
+    type: string
+    description: "New version number"
+
+steps:
+  - id: categorize_changes
+    type: model_call
+    prompt: "Categorize these changes into New Features, Improvements, and Bug Fixes: {{technical_changes}}."
+
+  - id: translate_to_user_value
+    type: model_call
+    prompt: "Rewrite the categorized changes: {{categorize_changes}} into a user-friendly format focusing on the value for the customer for version {{release_version}}."
+
+outputs:
+  - name: release_notes
+    type: string
