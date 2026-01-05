@@ -1,0 +1,29 @@
+name: "Standard Code Review"
+version: "1.0.0"
+description: "A comprehensive code review focused on logic and style"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: code_diff
+    type: string
+    description: "The diff of the changes to review"
+
+steps:
+  - id: analyze_logic
+    type: model_call
+    prompt: "Review the following code changes for logical errors and potential bugs:\n\n{{code_diff}}"
+
+  - id: analyze_style
+    type: model_call
+    prompt: "Review the following code changes for adherence to clean code principles and style consistency:\n\n{{code_diff}}"
+
+  - id: format_feedback
+    type: format
+    template: "markdown"
+    inputs:
+      logic: "{{analyze_logic}}"
+      style: "{{analyze_style}}"
+
+outputs:
+  - name: review_feedback
+    type: markdown

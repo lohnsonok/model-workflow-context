@@ -1,0 +1,18 @@
+name: "Modernize Code"
+version: "1.0.0"
+description: "Refactor code to use modern ESNext/TypeScript features"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_code
+    type: string
+    description: "The legacy code to modernize"
+
+steps:
+  - id: refactor
+    type: model_call
+    prompt: "Refactor the following code to use modern best practices, including async/await, arrow functions, and destructuring where appropriate:\n\n{{source_code}}"
+
+outputs:
+  - name: modernized_code
+    type: string

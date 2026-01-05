@@ -1,0 +1,35 @@
+name: "Complex Security Review"
+version: "1.0.0"
+description: "Review code for security and create a summary report"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: code_path
+    type: path
+    description: "Path to the directory to review"
+  - name: scan_depth
+    type: enum
+    options: ["shallow", "deep"]
+    description: "How thorough the scan should be"
+
+steps:
+  - id: analyze_security
+    type: model_call
+    prompt: "Analyze the code at {{code_path}} for security vulnerabilities. Depth: {{scan_depth}}."
+
+  - id: format_report
+    type: format
+    template: "markdown"
+    inputs:
+      data: "{{analyze_security}}"
+
+  - id: save_report
+    type: action
+    action: "create_file"
+    inputs:
+      path: "security_report.md"
+      content: "{{format_report}}"
+
+outputs:
+  - name: report_path
+    type: string

@@ -1,0 +1,29 @@
+name: New Workflow Proposal
+description: Propose a new MWC workflow for inclusion in the repository.
+title: "[PROPOSAL] "
+labels: ["new-workflow"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing a new workflow! Please fill out the details below.
+  - type: input
+    id: workflow_name
+    attributes:
+      label: Workflow Name
+      placeholder: e.g., Advanced Security Scanner
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What does this workflow do?
+    validations:
+      required: true
+  - type: textarea
+    id: draft_yaml
+    attributes:
+      label: Draft YAML
+      description: Provide a draft of the .mwc.yaml file if possible.
+      render: yaml

@@ -1,0 +1,34 @@
+name: "Initialize Project"
+version: "1.0.0"
+description: "Initialize a new project with a standard structure"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: project_name
+    type: string
+    description: "The name of the new project"
+  - name: tech_stack
+    type: string
+    description: "The technology stack (e.g., React, Node.js, Python)"
+
+steps:
+  - id: plan_structure
+    type: model_call
+    prompt: "Plan a standard project structure for a {{tech_stack}} project named {{project_name}}."
+
+  - id: create_root
+    type: action
+    action: "create_directory"
+    inputs:
+      path: "{{project_name}}"
+
+  - id: create_readme
+    type: action
+    action: "create_file"
+    inputs:
+      path: "{{project_name}}/README.md"
+      content: "# {{project_name}}\n\nProject initialized with MWC."
+
+outputs:
+  - name: project_path
+    type: string

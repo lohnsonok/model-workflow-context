@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MWC Workflow Schema v1.0",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "mwc_version": { "type": "string", "enum": ["1.0.0"] },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "enum": ["string", "enum", "boolean", "path"] },
+          "description": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["name", "type"]
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "enum": ["model_call", "action", "format"] },
+          "prompt": { "type": "string" },
+          "action": { "type": "string" },
+          "template": { "type": "string" },
+          "inputs": { "type": "object" }
+        },
+        "required": ["id", "type"]
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" }
+        },
+        "required": ["name", "type"]
+      }
+    }
+  },
+  "required": ["name", "version", "mwc_version", "steps"]
+}

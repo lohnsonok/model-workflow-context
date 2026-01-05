@@ -1,0 +1,13 @@
+{
+  "name": "mwc-tools",
+  "version": "1.0.0",
+  "description": "Tools for validating and parsing MWC workflows",
+  "main": "validator.js",
+  "scripts": {
+    "test": "node tests/run-tests.js"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "jsonschema": "^1.4.1"
+  }
+}

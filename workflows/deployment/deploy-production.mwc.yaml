@@ -1,0 +1,25 @@
+name: "Deploy to Production"
+version: "1.0.0"
+description: "Prepare production deployment"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: version_tag
+    type: string
+    description: "Version tag to deploy"
+
+steps:
+  - id: verify_staging
+    type: action
+    action: "check_staging_status"
+
+  - id: trigger_deploy
+    type: action
+    action: "trigger_github_action"
+    inputs:
+      workflow: "deploy-prod.yml"
+      ref: "{{version_tag}}"
+
+outputs:
+  - name: status
+    type: string

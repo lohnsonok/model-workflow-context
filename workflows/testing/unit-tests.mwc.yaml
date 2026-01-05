@@ -1,0 +1,21 @@
+name: "Unit Test Generator"
+version: "1.0.0"
+description: "Generate unit tests for the provided code"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_code
+    type: string
+    description: "The code to test"
+  - name: test_framework
+    type: string
+    description: "The testing framework to use (e.g., jest, pytest)"
+
+steps:
+  - id: generate_tests
+    type: model_call
+    prompt: "Generate comprehensive unit tests for the following code using {{test_framework}}:\n\n{{source_code}}"
+
+outputs:
+  - name: test_file
+    type: string

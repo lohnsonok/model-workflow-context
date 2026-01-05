@@ -1,0 +1,18 @@
+name: "Basic Workflow"
+version: "1.0.0"
+description: "A simple workflow that summarizes code"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: code_snippet
+    type: string
+    description: "The code to summarize"
+
+steps:
+  - id: summarize
+    type: model_call
+    prompt: "Summarize the following code: {{code_snippet}}"
+
+outputs:
+  - name: summary
+    type: string

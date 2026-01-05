@@ -1,0 +1,10 @@
+{
+  "name": "Documentation",
+  "version": "1.0.0",
+  "description": "Génération de docs, changelogs",
+  "author": "MWC Contributors",
+  "tags": ["docs", "documentation", "changelog"],
+  "compatible_editors": ["cursor", "windsurf", "antigravity"],
+  "min_mwc_version": "1.0.0",
+  "dependencies": []
+}

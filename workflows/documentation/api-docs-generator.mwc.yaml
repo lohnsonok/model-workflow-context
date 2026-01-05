@@ -1,0 +1,22 @@
+name: "API Docs Generator"
+version: "1.0.0"
+description: "Generate API documentation from source code"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_path
+    type: path
+    description: "Path to the source code"
+
+steps:
+  - id: extract_api
+    type: model_call
+    prompt: "Identify all public API endpoints or functions in {{source_path}} and extract their parameters and return types."
+
+  - id: generate_markdown
+    type: model_call
+    prompt: "Generate a Markdown document describing the API based on the following data:\n\n{{extract_api}}"
+
+outputs:
+  - name: api_documentation
+    type: markdown

@@ -1,0 +1,18 @@
+name: "E2E Scenario Generator"
+version: "1.0.0"
+description: "Create end-to-end test scenarios based on requirements"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: requirements
+    type: string
+    description: "User requirements or user stories"
+
+steps:
+  - id: define_scenarios
+    type: model_call
+    prompt: "Define E2E test scenarios based on these requirements:\n\n{{requirements}}"
+
+outputs:
+  - name: scenarios
+    type: markdown

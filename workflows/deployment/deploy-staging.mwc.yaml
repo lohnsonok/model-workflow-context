@@ -1,0 +1,27 @@
+name: "Deploy to Staging"
+version: "1.0.0"
+description: "Prepare staging deployment"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: version_tag
+    type: string
+    description: "Version tag to deploy"
+
+steps:
+  - id: check_artifacts
+    type: action
+    action: "check_build"
+    inputs:
+      version: "{{version_tag}}"
+
+  - id: trigger_deploy
+    type: action
+    action: "trigger_github_action"
+    inputs:
+      workflow: "deploy-staging.yml"
+      ref: "{{version_tag}}"
+
+outputs:
+  - name: status
+    type: string

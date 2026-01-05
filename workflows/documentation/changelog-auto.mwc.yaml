@@ -1,0 +1,24 @@
+name: "Automatic Changelog"
+version: "1.0.0"
+description: "Generate a changelog from git commit history"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: commit_history
+    type: string
+    description: "Recent git commit messages"
+
+steps:
+  - id: categorize_commits
+    type: model_call
+    prompt: "Categorize the following commit messages into 'Features', 'Fixes', and 'Breaking Changes':\n\n{{commit_history}}"
+
+  - id: format_changelog
+    type: format
+    template: "markdown"
+    inputs:
+      data: "{{categorize_commits}}"
+
+outputs:
+  - name: changelog
+    type: markdown

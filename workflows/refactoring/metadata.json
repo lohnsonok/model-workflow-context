@@ -1,0 +1,10 @@
+{
+  "name": "Refactoring",
+  "version": "1.0.0",
+  "description": "Modernisation de code",
+  "author": "MWC Contributors",
+  "tags": ["refactoring", "modernization", "cleanup"],
+  "compatible_editors": ["cursor", "windsurf", "antigravity"],
+  "min_mwc_version": "1.0.0",
+  "dependencies": []
+}
