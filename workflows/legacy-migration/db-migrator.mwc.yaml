@@ -11,6 +11,10 @@ steps:
   - id: map_data
     type: model_call
     prompt: "Create a mapping between {{source_schema}} and {{target_schema}}. Identify required data transformations."
+
+  - id: generate_scripts
+    type: model_call
+    prompt: "Based on the mapping in {{map_data}}, generate the actual SQL/NoSQL migration scripts to migrate data from {{source_schema}} to {{target_schema}}."
 outputs:
   - name: migration_scripts
     type: string

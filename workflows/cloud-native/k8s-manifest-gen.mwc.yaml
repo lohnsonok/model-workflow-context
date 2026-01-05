@@ -21,6 +21,10 @@ steps:
     type: model_call
     prompt: "Generate Service and Ingress YAMLs for {{app_name}} on port {{port}}. Use standard annotations for Nginx ingress."
 
+  - id: aggregate_manifests
+    type: model_call
+    prompt: "Combine the following Kubernetes manifests into a single multi-document YAML file, separated by ---:\n\n{{generate_deployment}}\n\n{{generate_networking}}"
+
 outputs:
   - name: k8s_manifests
     type: string

@@ -10,7 +10,7 @@ inputs:
 steps:
   - id: draft_versioning
     type: model_call
-    prompt: "Design a versioning strategy (URI vs Header) and a 6-month deprecation timeline for these changes: {{breaking_changes}}."
+    prompt: "Currently at version {{current_version}}, design a versioning strategy (URI vs Header) and a 6-month deprecation timeline for these breaking changes: {{breaking_changes}}."
 outputs:
   - name: versioning_strategy
     type: string

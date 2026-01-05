@@ -18,7 +18,7 @@ steps:
 
   - id: generate_transformation
     type: model_call
-    prompt: "Apply these transformation rules: {{transformations}} to the extraction logic. Use Pandas or PySpark as appropriate."
+    prompt: "Apply these transformation rules: {{transformations}} to the extraction logic provided here: {{generate_extraction}}. Use Pandas or PySpark as appropriate."
 
 outputs:
   - name: pipeline_code

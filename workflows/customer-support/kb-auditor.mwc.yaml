@@ -8,7 +8,7 @@ inputs:
 steps:
   - id: find_issues
     type: model_call
-    prompt: "Identify potentially outdated instructions or missing steps in this help article: {{article_content}}."
+    prompt: "Identify potentially outdated instructions, missing steps, or broken/invalid links in this help article: {{article_content}}."
 outputs:
   - name: audit_report
     type: string

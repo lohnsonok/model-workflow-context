@@ -22,7 +22,7 @@ MWC provides a unified format for defining agentic workflows that can be interpr
 - **Portability**: Write your workflow once, run it in any supported AI editor.
 - **Complexity**: Handle multi-domain tasks (BioTech, FinTech, Security) with expert-level guidance.
 
-## Workflow Categories (105)
+## Workflow Categories (97)
 We offer a vast library of production-ready workflows covering every aspect of the tech lifecycle:
 
 - **Core**: [Setup](workflows/setup/), [Architecture](workflows/architecture/), [Testing](workflows/testing/), [Refactoring](workflows/refactoring/), [Dev Tools](workflows/dev-tools/)

@@ -19,7 +19,7 @@ steps:
 
   - id: suggest_optimizations
     type: model_call
-    prompt: "Based on the complexity and leak analysis, suggest 3 specific optimizations to improve the performance of this code."
+    prompt: "Based on the complexity analysis:\n{{analyze_complexity}}\n\nAnd the leak analysis:\n{{find_leaks}}\n\nSuggest 3 specific optimizations to improve the performance of this code."
 
 outputs:
   - name: performance_report

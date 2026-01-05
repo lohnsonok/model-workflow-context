@@ -6,6 +6,7 @@ mwc_version: "1.0.0"
 inputs:
   - name: product_specs
     type: string
+    description: "The technical specifications and features of the product"
 
 steps:
   - id: generate_copy

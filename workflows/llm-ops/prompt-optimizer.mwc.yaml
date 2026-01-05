@@ -18,7 +18,7 @@ steps:
 
   - id: add_examples
     type: model_call
-    prompt: "Add 2-3 high-quality few-shot examples to the prompt to ensure the output matches the format: {{desired_output_format}}."
+    prompt: "Take the optimized prompt from {{apply_cot}} and add 2-3 high-quality few-shot examples to ensure the output matches the format: {{desired_output_format}}."
 
 outputs:
   - name: optimized_prompt

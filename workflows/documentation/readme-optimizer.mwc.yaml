@@ -18,7 +18,7 @@ steps:
 
   - id: generate_optimized_readme
     type: model_call
-    prompt: "Rewrite the README to be more professional, clear, and comprehensive, filling in the gaps identified: {{analyze_gaps}}."
+    prompt: "Rewrite the following README to be more professional, clear, and comprehensive, filling in the gaps identified in {{analyze_gaps}}:\n\n{{current_readme}}"
 
 outputs:
   - name: optimized_readme

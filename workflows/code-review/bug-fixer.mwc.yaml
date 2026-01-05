@@ -18,11 +18,11 @@ steps:
 
   - id: propose_fix
     type: model_call
-    prompt: "Based on your analysis, propose a specific code fix to resolve the error. Ensure the fix handles edge cases."
+    prompt: "Based on the analysis in {{analyze_error}}, propose a specific code fix to resolve the error in {{relevant_code}}. Ensure the fix handles edge cases."
 
   - id: verify_fix
     type: model_call
-    prompt: "Explain how to verify that this fix works (e.g., what test case to run)."
+    prompt: "Based on the proposed fix: {{propose_fix}}, explain how to verify that this fix works (e.g., what test case to run)."
 
 outputs:
   - name: fix_suggestion

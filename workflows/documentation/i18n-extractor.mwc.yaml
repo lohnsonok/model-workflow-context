@@ -18,11 +18,11 @@ steps:
 
   - id: generate_keys
     type: model_call
-    prompt: "Generate unique i18n keys for each identified string and format them as a JSON object for the {{target_locale}} locale."
+    prompt: "Generate unique i18n keys for each identified string from {{find_strings}} and format them as a JSON object for the {{target_locale}} locale."
 
   - id: suggest_replacements
     type: model_call
-    prompt: "Show how the code in {{source_file}} should be modified to use the new i18n keys (e.g., using t('key')). "
+    prompt: "Show how the code in {{source_file}} should be modified to use the new i18n keys from {{generate_keys}} (e.g., using t('key')). "
 
 outputs:
   - name: translation_json
