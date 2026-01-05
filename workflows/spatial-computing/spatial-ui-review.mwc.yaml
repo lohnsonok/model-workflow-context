@@ -1,0 +1,22 @@
+name: "Spatial UI Review"
+version: "1.0.0"
+description: "Review UI designs for VR/AR (Spatial Computing) focusing on depth, field of view, and interaction comfort"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: spatial_design_desc
+    type: string
+    description: "Description of the 3D interface layout and interactions"
+
+steps:
+  - id: analyze_ergonomics
+    type: model_call
+    prompt: "Analyze the ergonomic comfort of this spatial design: {{spatial_design_desc}}. Check for neck strain, 'gorilla arm' effect, and optimal depth placement (1-2 meters)."
+
+  - id: visual_hierarchy
+    type: model_call
+    prompt: "Suggest improvements for visual hierarchy in a 360-degree environment based on: {{analyze_ergonomics}}."
+
+outputs:
+  - name: spatial_ux_report
+    type: string

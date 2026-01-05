@@ -1,0 +1,16 @@
+name: "Inventory Forecast"
+version: "1.0.0"
+description: "Forecast inventory needs based on historical sales data and upcoming promotions"
+mwc_version: "1.0.0"
+inputs:
+  - name: historical_sales
+    type: string
+  - name: promotions_plan
+    type: string
+steps:
+  - id: forecast_demand
+    type: model_call
+    prompt: "Predict stock requirements for the next 3 months based on: {{historical_sales}} and {{promotions_plan}}."
+outputs:
+  - name: forecast_report
+    type: string

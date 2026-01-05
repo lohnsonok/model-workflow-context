@@ -1,0 +1,56 @@
+name: "Portfolio Rebalancer"
+version: "1.1.0"
+description: "Calculate trades needed to rebalance an investment portfolio to target weights using multi-step validation"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: current_holdings
+    type: string
+    description: "JSON or CSV list of current assets and quantities (e.g., {'AAPL': 10, 'GOOG': 5})"
+  - name: target_allocation
+    type: string
+    description: "Target percentage allocation (e.g., {'Tech': 0.4, 'Bonds': 0.6})"
+  - name: total_portfolio_value
+    type: string
+    description: "Current total value of the portfolio in base currency"
+
+steps:
+  - id: analyze_current_state
+    type: model_call
+    prompt: |
+      Analyze the current holdings: {{current_holdings}}.
+      1. Calculate the current value of each position based on market prices (assume latest known or ask for input if missing).
+      2. Group assets into categories matching the target allocation keys (e.g., map AAPL to 'Tech').
+      3. Calculate the current percentage allocation for each category.
+      Output the 'Current Allocation Table'.
+
+  - id: calculate_deviations
+    type: model_call
+    prompt: |
+      Compare 'Current Allocation' from {{analyze_current_state}} with 'Target Allocation': {{target_allocation}}.
+      1. Calculate the deviation (Target % - Current %) for each category.
+      2. Identify which categories are Overweight (need to sell) and Underweight (need to buy).
+      3. Calculate the monetary value of the deviation based on Total Portfolio Value: {{total_portfolio_value}}.
+
+  - id: generate_trade_plan
+    type: model_call
+    prompt: |
+      Generate a specific Buy/Sell plan based on deviations from {{calculate_deviations}}.
+      1. List specific assets to Sell to reduce Overweight categories.
+      2. List specific assets to Buy to boost Underweight categories.
+      3. Ensure the total Sell value roughly matches the total Buy value (cash neutral) unless depositing/withdrawing.
+      Output a 'Trade Execution List'.
+
+  - id: compliance_check
+    type: model_call
+    prompt: |
+      Review the Trade Execution List from {{generate_trade_plan}}.
+      Check for:
+      1. Wash sale violations (warning only).
+      2. Concentration risk (is any single asset > 20%?).
+      3. Liquidity warnings (small cap stocks).
+      Generate a final 'Rebalancing Report' with these warnings included.
+
+outputs:
+  - name: rebalancing_plan
+    type: string

@@ -1,0 +1,16 @@
+name: "Lesson Plan Generator"
+version: "1.0.0"
+description: "Generate a structured lesson plan for a specific subject and grade level"
+mwc_version: "1.0.0"
+inputs:
+  - name: subject
+    type: string
+  - name: grade_level
+    type: string
+steps:
+  - id: create_plan
+    type: model_call
+    prompt: "Design a 60-minute lesson plan for {{subject}} at a {{grade_level}} level. Include learning objectives, activities, and assessment."
+outputs:
+  - name: lesson_plan
+    type: string

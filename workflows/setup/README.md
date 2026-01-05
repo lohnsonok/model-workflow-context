@@ -3,4 +3,5 @@
 Workflows for initializing and configuring new projects.
 
 ## Workflows
-- `init-project.mwc.yaml`: Initialize a new project structure based on a template.
+- [Project Init](init-project.mwc.yaml): Scaffold a new project structure.
+- [Onboarding Guide](onboarding-guide.mwc.yaml): Generate a step-by-step onboarding guide for new developers.

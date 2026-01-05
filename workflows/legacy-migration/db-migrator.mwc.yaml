@@ -1,0 +1,16 @@
+name: "DB Schema Migrator"
+version: "1.0.0"
+description: "Generate SQL/NoSQL migration scripts to move data from legacy to modern schemas"
+mwc_version: "1.0.0"
+inputs:
+  - name: source_schema
+    type: string
+  - name: target_schema
+    type: string
+steps:
+  - id: map_data
+    type: model_call
+    prompt: "Create a mapping between {{source_schema}} and {{target_schema}}. Identify required data transformations."
+outputs:
+  - name: migration_scripts
+    type: string

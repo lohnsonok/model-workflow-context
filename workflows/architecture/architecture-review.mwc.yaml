@@ -1,0 +1,26 @@
+name: "Architecture Review"
+version: "1.0.0"
+description: "Review system design and code structure against architectural patterns (Clean Architecture, DDD, etc.)"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: code_base_structure
+    type: string
+    description: "Directory tree or key architecture files"
+  - name: pattern
+    type: string
+    description: "Preferred pattern (e.g., hexagonal, layers, microservices)"
+    default: "hexagonal"
+
+steps:
+  - id: analyze_dependencies
+    type: model_call
+    prompt: "Analyze the dependency flow in the following structure. Check if it violates the {{pattern}} architecture principles:\n\n{{code_base_structure}}"
+
+  - id: suggest_improvements
+    type: model_call
+    prompt: "Based on the analysis: {{analyze_dependencies}}, suggest how to better decouple components or reorganize folders to strictly follow {{pattern}}."
+
+outputs:
+  - name: architecture_report
+    type: string

@@ -1,0 +1,14 @@
+name: "URDF Generator"
+version: "1.0.0"
+description: "Generate a Unified Robot Description Format (URDF) file for a robotic arm"
+mwc_version: "1.0.0"
+inputs:
+  - name: arm_joints_and_links
+    type: string
+steps:
+  - id: generate_urdf
+    type: model_call
+    prompt: "Generate a complete URDF XML for a robot with these specs: {{arm_joints_and_links}}. Include visual, collision, and inertial tags."
+outputs:
+  - name: urdf_xml
+    type: string

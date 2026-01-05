@@ -1,0 +1,53 @@
+name: "Monolith Splitter Strategy"
+version: "1.1.0"
+description: "Analyze a monolithic codebase to identify boundaries for microservices extraction"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: codebase_structure
+    type: string
+    description: "Tree structure or list of modules/files in the monolith"
+  - name: dependency_graph
+    type: string
+    description: "Description of dependencies between modules (e.g., 'Order module calls User module')"
+  - name: business_domain
+    type: string
+    description: "Primary business domain (e.g., E-commerce, Banking)"
+
+steps:
+  - id: analyze_domains
+    type: model_call
+    prompt: |
+      Analyze the codebase structure: {{codebase_structure}} and business domain: {{business_domain}}.
+      Identify the core 'Bounded Contexts' (DDD).
+      - Which modules seem to belong together based on naming and likely function?
+      - Identify 'God Classes' or shared utilities that might be problematic.
+  
+  - id: analyze_coupling
+    type: model_call
+    prompt: |
+      Using the dependency graph: {{dependency_graph}}, analyze the coupling between the identified Bounded Contexts from {{analyze_domains}}.
+      - Identify 'Afferent Coupling' (who calls me) and 'Efferent Coupling' (who I call).
+      - Highlight cycles (A calls B, B calls A) which prevent easy splitting.
+  
+  - id: define_seams
+    type: model_call
+    prompt: |
+      Propose specific 'Seams' where the monolith can be split.
+      Based on {{analyze_coupling}}:
+      1. Identify the easiest service to extract first (lowest coupling).
+      2. Define the API Interface that would be needed to replace the internal function calls.
+      3. Propose a 'Strangler Fig' pattern approach for migration.
+  
+  - id: migration_plan
+    type: model_call
+    prompt: |
+      Create a step-by-step Migration Plan.
+      1. Phase 1: Extract {{define_seams}} Service 1.
+      2. Phase 2: Database migration strategy (Shared DB vs Database per Service).
+      3. Phase 3: Testing strategy (Contract Testing).
+      Output a comprehensive 'Monolith Deconstruction Roadmap'.
+
+outputs:
+  - name: migration_roadmap
+    type: string

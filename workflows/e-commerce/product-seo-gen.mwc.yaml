@@ -1,0 +1,17 @@
+name: "Product Description SEO"
+version: "1.0.0"
+description: "Generate SEO-optimized product descriptions for E-commerce platforms"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: product_specs
+    type: string
+
+steps:
+  - id: generate_copy
+    type: model_call
+    prompt: "Write a high-converting product description using these specs: {{product_specs}}. Include SEO keywords naturally."
+
+outputs:
+  - name: ecommerce_copy
+    type: string

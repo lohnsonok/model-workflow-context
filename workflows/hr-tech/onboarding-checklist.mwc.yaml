@@ -1,0 +1,16 @@
+name: "Onboarding Checklist"
+version: "1.0.0"
+description: "Generate a personalized onboarding checklist for a new hire"
+mwc_version: "1.0.0"
+inputs:
+  - name: role_title
+    type: string
+  - name: department
+    type: string
+steps:
+  - id: create_checklist
+    type: model_call
+    prompt: "Create a 30-60-90 day onboarding checklist for a {{role_title}} in the {{department}} team."
+outputs:
+  - name: onboarding_plan
+    type: string

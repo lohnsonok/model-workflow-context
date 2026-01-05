@@ -1,0 +1,21 @@
+name: "Mainframe to Microservice"
+version: "1.0.0"
+description: "Analyze legacy COBOL/Mainframe logic and suggest a microservice architecture"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: legacy_file_path
+    type: path
+    description: "Path to the legacy COBOL/Mainframe source file"
+
+steps:
+  - id: analyze_logic
+    type: model_call
+    prompt: "Explain the business logic in the legacy file at {{legacy_file_path}}."
+  - id: suggest_modern_arch
+    type: model_call
+    prompt: "Suggest a modern Node.js/Go microservice structure to replace the logic in: {{analyze_logic}}."
+
+outputs:
+  - name: migration_plan
+    type: string

@@ -1,0 +1,25 @@
+name: "HAL Generator"
+version: "1.0.0"
+description: "Generate C Hardware Abstraction Layer code from register definitions or datasheets"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: register_map
+    type: string
+    description: "Memory addresses and bit definitions for the hardware"
+  - name: mcu_family
+    type: string
+    description: "e.g., STM32, ESP32, AVR"
+
+steps:
+  - id: create_headers
+    type: model_call
+    prompt: "Generate C header files with bit-masking macros and structs for the register map: {{register_map}} for the {{mcu_family}} family."
+
+  - id: generate_init_logic
+    type: model_call
+    prompt: "Write the C initialization function for the peripheral based on the header: {{create_headers}}."
+
+outputs:
+  - name: hal_code
+    type: string

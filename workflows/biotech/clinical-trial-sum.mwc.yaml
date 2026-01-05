@@ -1,0 +1,14 @@
+name: "Clinical Trial Summarizer"
+version: "1.0.0"
+description: "Summarize clinical trial results for researchers and medical professionals"
+mwc_version: "1.0.0"
+inputs:
+  - name: trial_data
+    type: string
+steps:
+  - id: extract_findings
+    type: model_call
+    prompt: "Summarize the primary endpoints, efficacy, and safety profile from this clinical trial data: {{trial_data}}."
+outputs:
+  - name: trial_summary
+    type: string

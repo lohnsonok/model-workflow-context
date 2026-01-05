@@ -1,0 +1,14 @@
+name: "E-waste Audit Tool"
+version: "1.0.0"
+description: "Audit hardware lifecycle and suggest recycling or repurposing strategies to reduce e-waste"
+mwc_version: "1.0.0"
+inputs:
+  - name: hardware_inventory
+    type: string
+steps:
+  - id: analyze_lifecycle
+    type: model_call
+    prompt: "Based on this inventory: {{hardware_inventory}}, identify devices nearing end-of-life and suggest sustainable disposal or reuse options."
+outputs:
+  - name: e_waste_report
+    type: string

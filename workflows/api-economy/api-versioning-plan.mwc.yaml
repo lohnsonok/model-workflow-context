@@ -1,0 +1,16 @@
+name: "API Versioning Plan"
+version: "1.0.0"
+description: "Create a deprecation and versioning plan for an evolving API"
+mwc_version: "1.0.0"
+inputs:
+  - name: current_version
+    type: string
+  - name: breaking_changes
+    type: string
+steps:
+  - id: draft_versioning
+    type: model_call
+    prompt: "Design a versioning strategy (URI vs Header) and a 6-month deprecation timeline for these changes: {{breaking_changes}}."
+outputs:
+  - name: versioning_strategy
+    type: string

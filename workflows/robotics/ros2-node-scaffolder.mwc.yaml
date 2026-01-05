@@ -1,0 +1,20 @@
+name: "ROS2 Node Scaffolder"
+version: "1.0.0"
+description: "Scaffold a ROS2 (Robot Operating System) node in C++ or Python"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: node_name
+    type: string
+  - name: language
+    type: enum
+    values: ["cpp", "python"]
+
+steps:
+  - id: generate_node
+    type: model_call
+    prompt: "Generate a boilerplate ROS2 node in {{language}} named {{node_name}}. Include publisher and subscriber examples."
+
+outputs:
+  - name: ros2_code
+    type: string

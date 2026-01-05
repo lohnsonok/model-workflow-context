@@ -1,0 +1,14 @@
+name: "Knowledge Base Auditor"
+version: "1.0.0"
+description: "Scan knowledge base articles for outdated information or broken links"
+mwc_version: "1.0.0"
+inputs:
+  - name: article_content
+    type: string
+steps:
+  - id: find_issues
+    type: model_call
+    prompt: "Identify potentially outdated instructions or missing steps in this help article: {{article_content}}."
+outputs:
+  - name: audit_report
+    type: string

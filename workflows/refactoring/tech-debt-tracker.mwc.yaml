@@ -1,0 +1,22 @@
+name: "Tech Debt Tracker"
+version: "1.0.0"
+description: "Scan code for technical debt, TODOs, and deprecated patterns to create a backlog"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: code_directory_summary
+    type: string
+    description: "Overview of a module or directory"
+
+steps:
+  - id: find_debt
+    type: model_call
+    prompt: "Scan the following code overview for TODOs, FIXMEs, hardcoded values, and complex 'god objects' that represent technical debt:\n\n{{code_directory_summary}}"
+
+  - id: prioritize_backlog
+    type: model_call
+    prompt: "Prioritize the debt items found in: {{find_debt}} based on 'Ease of Fix' vs 'Impact on Velocity'."
+
+outputs:
+  - name: tech_debt_backlog
+    type: string

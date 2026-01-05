@@ -1,0 +1,25 @@
+name: "App Store Metadata Generator"
+version: "1.0.0"
+description: "Generate optimized app store descriptions, titles, and keywords for iOS and Android"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: app_features
+    type: string
+    description: "Main features and value proposition of the app"
+  - name: target_audience
+    type: string
+    description: "Who is the app for?"
+
+steps:
+  - id: generate_copy
+    type: model_call
+    prompt: "Write a compelling App Store description (max 4000 chars) for an app with these features: {{app_features}}. Target audience: {{target_audience}}."
+
+  - id: optimize_keywords
+    type: model_call
+    prompt: "Generate a list of 10 high-traffic keywords and 3 title variations based on the description: {{generate_copy}}."
+
+outputs:
+  - name: store_metadata
+    type: string

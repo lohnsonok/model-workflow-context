@@ -1,0 +1,16 @@
+name: "Cart Abandonment Email Gen"
+version: "1.0.0"
+description: "Generate a sequence of recovery emails for abandoned shopping carts"
+mwc_version: "1.0.0"
+inputs:
+  - name: product_name
+    type: string
+  - name: discount_code
+    type: string
+steps:
+  - id: write_emails
+    type: model_call
+    prompt: "Draft 3 recovery emails (Remind, Incentivize, Last Chance) for {{product_name}} using discount: {{discount_code}}."
+outputs:
+  - name: email_sequence
+    type: string

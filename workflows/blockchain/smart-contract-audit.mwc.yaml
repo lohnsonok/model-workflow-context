@@ -1,0 +1,22 @@
+name: "Smart Contract Auditor"
+version: "1.0.0"
+description: "Audit Solidity/Rust smart contracts for common vulnerabilities (Reentrancy, Integer Overflow, etc.)"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: contract_path
+    type: path
+    description: "Path to the Solidity or Rust smart contract file"
+
+steps:
+  - id: scan_vulnerabilities
+    type: model_call
+    prompt: "Scan the smart contract at {{contract_path}} for common DeFi/Web3 vulnerabilities: Reentrancy, Front-running, Integer Overflow, and Logic Errors."
+
+  - id: gas_optimization
+    type: model_call
+    prompt: "Suggest gas optimization techniques for the functions identified in: {{scan_vulnerabilities}}."
+
+outputs:
+  - name: audit_report
+    type: string

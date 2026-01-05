@@ -1,0 +1,14 @@
+name: "Ticket Categorizer"
+version: "1.0.0"
+description: "Automatically categorize and prioritize incoming support tickets"
+mwc_version: "1.0.0"
+inputs:
+  - name: ticket_text
+    type: string
+steps:
+  - id: classify_ticket
+    type: model_call
+    prompt: "Categorize this ticket: {{ticket_text}} into 'Billing', 'Technical', or 'Feature Request' and assign a priority (Low, Med, High)."
+outputs:
+  - name: classification
+    type: string

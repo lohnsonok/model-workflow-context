@@ -1,0 +1,14 @@
+name: "Response Polisher"
+version: "1.0.0"
+description: "Refine a draft support response to be more empathetic and professional"
+mwc_version: "1.0.0"
+inputs:
+  - name: draft_response
+    type: string
+steps:
+  - id: polish_text
+    type: model_call
+    prompt: "Improve the empathy and clarity of this support response: {{draft_response}} while keeping it concise."
+outputs:
+  - name: polished_response
+    type: string

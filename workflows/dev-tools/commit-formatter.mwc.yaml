@@ -1,0 +1,14 @@
+name: "Commit Message Formatter"
+version: "1.0.0"
+description: "Format raw git changes into a Conventional Commits compliant message"
+mwc_version: "1.0.0"
+inputs:
+  - name: diff_summary
+    type: string
+steps:
+  - id: format_commit
+    type: model_call
+    prompt: "Write a Conventional Commit message (feat, fix, docs, etc.) based on these changes: {{diff_summary}}."
+outputs:
+  - name: commit_message
+    type: string

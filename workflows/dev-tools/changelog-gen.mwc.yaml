@@ -1,0 +1,14 @@
+name: "Changelog Generator"
+version: "1.0.0"
+description: "Generate a user-friendly changelog from a list of commit messages"
+mwc_version: "1.0.0"
+inputs:
+  - name: commit_history
+    type: string
+steps:
+  - id: write_changelog
+    type: model_call
+    prompt: "Group these commits into 'Added', 'Changed', and 'Fixed' sections for a new release: {{commit_history}}."
+outputs:
+  - name: changelog_markdown
+    type: string

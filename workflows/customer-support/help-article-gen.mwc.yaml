@@ -1,0 +1,17 @@
+name: "Help Center Article Gen"
+version: "1.0.0"
+description: "Transform internal technical docs into customer-facing Help Center articles"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: technical_doc
+    type: string
+
+steps:
+  - id: translate_to_user
+    type: model_call
+    prompt: "Rewrite this technical documentation for a non-technical customer: {{technical_doc}}. Focus on 'How-to' steps."
+
+outputs:
+  - name: help_center_article
+    type: string

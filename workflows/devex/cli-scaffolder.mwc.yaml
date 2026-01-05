@@ -1,0 +1,25 @@
+name: "CLI Tool Scaffolder"
+version: "1.0.0"
+description: "Scaffold a modern internal CLI tool (Commander/Gluegun) to improve developer productivity"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: cli_name
+    type: string
+    description: "Name of the CLI tool"
+  - name: commands_list
+    type: string
+    description: "List of commands the CLI should support"
+
+steps:
+  - id: generate_structure
+    type: model_call
+    prompt: "Generate the folder structure and package.json for a Node.js CLI named {{cli_name}}."
+
+  - id: implement_commands
+    type: model_call
+    prompt: "Write the boilerplate code for the following commands using the 'commander' library: {{commands_list}}."
+
+outputs:
+  - name: cli_boilerplate
+    type: string

@@ -1,0 +1,52 @@
+name: "Protein Folding Analysis"
+version: "1.1.0"
+description: "Analyze protein primary structure for potential folding patterns and domains using Chain-of-Thought"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: amino_acid_sequence
+    type: string
+    description: "The primary amino acid sequence (e.g., MVLSPADKTN...)"
+  - name: analysis_depth
+    type: enum
+    options: ["quick", "detailed"]
+    description: "Depth of the structural analysis"
+
+steps:
+  - id: analyze_properties
+    type: model_call
+    prompt: |
+      Analyze the physicochemical properties of this amino acid sequence: {{amino_acid_sequence}}.
+      Focus on:
+      1. Hydrophobicity profile (Kyte-Doolittle scale approximation)
+      2. Charge distribution (Isoelectric point estimation)
+      3. Presence of special residues (Cysteine bridges, Proline kinks)
+  
+  - id: predict_secondary_structure
+    type: model_call
+    prompt: |
+      Based on the properties analysis: {{analyze_properties}}, predict the likely secondary structure elements.
+      - Identify potential Alpha-helices (n+4 H-bonding patterns)
+      - Identify potential Beta-sheets (extended strands)
+      - Identify loops and disordered regions
+  
+  - id: identify_domains
+    type: model_call
+    prompt: |
+      Using the secondary structure prediction: {{predict_secondary_structure}}, hypothesize potential protein domains.
+      Reference known structural motifs (e.g., Zinc finger, Beta-barrel, Rossmann fold) if patterns match.
+  
+  - id: final_report
+    type: model_call
+    prompt: |
+      Synthesize a {{analysis_depth}} report on the protein's potential structure.
+      Combine findings from:
+      - Properties: {{analyze_properties}}
+      - Secondary Structure: {{predict_secondary_structure}}
+      - Domains: {{identify_domains}}
+      
+      Disclaimer: This is a textual prediction and should be verified with structural biology tools (AlphaFold, cryo-EM).
+
+outputs:
+  - name: folding_report
+    type: string

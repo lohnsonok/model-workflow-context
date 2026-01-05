@@ -1,0 +1,16 @@
+name: "Lab Protocol Generator"
+version: "1.0.0"
+description: "Generate a step-by-step laboratory protocol for a specific experiment"
+mwc_version: "1.0.0"
+inputs:
+  - name: experiment_goal
+    type: string
+  - name: reagents_available
+    type: string
+steps:
+  - id: draft_protocol
+    type: model_call
+    prompt: "Create a detailed laboratory protocol to achieve {{experiment_goal}} using {{reagents_available}}."
+outputs:
+  - name: lab_protocol
+    type: string

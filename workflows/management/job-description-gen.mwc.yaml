@@ -1,0 +1,25 @@
+name: "Job Description Generator"
+version: "1.0.0"
+description: "Create a tailored job description for technical roles based on team stack and culture"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: role_title
+    type: string
+    description: "e.g., Senior Fullstack Engineer"
+  - name: stack_and_culture
+    type: string
+    description: "Technologies used and team values"
+
+steps:
+  - id: define_requirements
+    type: model_call
+    prompt: "List key responsibilities and required technical skills for a {{role_title}} using this stack: {{stack_and_culture}}."
+
+  - id: write_jd
+    type: model_call
+    prompt: "Write a complete, attractive job description including: About Us, The Role, Requirements, and Benefits based on: {{define_requirements}}."
+
+outputs:
+  - name: job_description
+    type: string

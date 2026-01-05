@@ -1,0 +1,14 @@
+name: "Model Evaluation Report"
+version: "1.0.0"
+description: "Generate a detailed evaluation report for a trained ML model based on metrics"
+mwc_version: "1.0.0"
+inputs:
+  - name: model_metrics
+    type: string
+steps:
+  - id: analyze_metrics
+    type: model_call
+    prompt: "Interpret these metrics (Accuracy, Precision, Recall, F1): {{model_metrics}}. Identify potential bias or overfitting."
+outputs:
+  - name: eval_report
+    type: string

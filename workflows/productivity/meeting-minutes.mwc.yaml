@@ -1,0 +1,17 @@
+name: "Meeting Minutes Automator"
+version: "1.0.0"
+description: "Summarize meeting transcripts into action items and key decisions"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: transcript
+    type: string
+
+steps:
+  - id: summarize
+    type: model_call
+    prompt: "Extract key decisions and assigned action items from this meeting transcript: {{transcript}}."
+
+outputs:
+  - name: meeting_summary
+    type: string

@@ -1,0 +1,22 @@
+name: "Visual Regression Test Gen"
+version: "1.0.0"
+description: "Generate Playwright/Applitools visual regression tests for critical UI components"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: component_list
+    type: string
+    description: "List of components to test visually"
+
+steps:
+  - id: define_viewports
+    type: model_call
+    prompt: "Define a list of standard viewports (Mobile, Tablet, Desktop) and themes (Light/Dark) to test for: {{component_list}}."
+
+  - id: generate_visual_tests
+    type: model_call
+    prompt: "Write Playwright code to capture screenshots and compare them against baselines for each component in {{component_list}} using the viewports: {{define_viewports}}."
+
+outputs:
+  - name: visual_test_code
+    type: string

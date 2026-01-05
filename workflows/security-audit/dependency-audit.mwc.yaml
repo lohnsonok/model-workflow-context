@@ -1,0 +1,16 @@
+name: "Dependency Vulnerability Audit"
+version: "1.0.0"
+description: "Analyze a package.json or requirements.txt for known vulnerabilities"
+mwc_version: "1.0.0"
+inputs:
+  - name: dependency_file_path
+    type: path
+    description: "Path to package.json, requirements.txt, or similar"
+
+steps:
+  - id: audit_deps
+    type: model_call
+    prompt: "Scan the dependencies in the file at {{dependency_file_path}} for known vulnerabilities. Suggest safer versions for any flagged packages."
+outputs:
+  - name: audit_report
+    type: string

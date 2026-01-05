@@ -1,0 +1,20 @@
+name: "DNA Sequence Analyzer"
+version: "1.0.0"
+description: "Analyze DNA sequences for patterns, mutations, and GC content"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: dna_sequence
+    type: string
+
+steps:
+  - id: gc_content
+    type: model_call
+    prompt: "Calculate the GC content percentage of the following DNA sequence: {{dna_sequence}}."
+  - id: identify_motifs
+    type: model_call
+    prompt: "Identify common regulatory motifs or repeat patterns in: {{dna_sequence}}."
+
+outputs:
+  - name: biotech_report
+    type: string

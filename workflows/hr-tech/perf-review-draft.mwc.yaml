@@ -1,0 +1,19 @@
+name: "Performance Review Draft"
+version: "1.0.0"
+description: "Draft a performance review for an employee based on achievements and feedback"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: achievements
+    type: string
+  - name: feedback_notes
+    type: string
+
+steps:
+  - id: draft_review
+    type: model_call
+    prompt: "Write a professional and constructive performance review based on these achievements: {{achievements}} and feedback: {{feedback_notes}}."
+
+outputs:
+  - name: review_draft
+    type: string

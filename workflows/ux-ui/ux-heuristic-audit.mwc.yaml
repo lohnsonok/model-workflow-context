@@ -1,0 +1,22 @@
+name: "UX Heuristic Audit"
+version: "1.0.0"
+description: "Perform a UX audit of a UI component or page based on Nielsen's heuristics"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: ui_code_or_description
+    type: string
+    description: "Code or detailed description of the UI"
+
+steps:
+  - id: analyze_heuristics
+    type: model_call
+    prompt: "Analyze the following UI against Nielsen's 10 usability heuristics (Visibility of system status, Match between system and real world, etc.):\n\n{{ui_code_or_description}}"
+
+  - id: severity_rating
+    type: model_call
+    prompt: "For each issue found in: {{analyze_heuristics}}, provide a severity rating (0-4) and a specific recommendation for improvement."
+
+outputs:
+  - name: audit_report
+    type: string

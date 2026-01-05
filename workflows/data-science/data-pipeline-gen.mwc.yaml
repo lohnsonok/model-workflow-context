@@ -1,0 +1,25 @@
+name: "Data Pipeline Generator"
+version: "1.0.0"
+description: "Generate a Python/Spark data pipeline for ETL processes"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: source_schema
+    type: string
+    description: "Description or schema of the source data"
+  - name: transformations
+    type: string
+    description: "Business logic for data transformations"
+
+steps:
+  - id: generate_extraction
+    type: model_call
+    prompt: "Write Python code to extract data from {{source_schema}} handling common edge cases like missing values."
+
+  - id: generate_transformation
+    type: model_call
+    prompt: "Apply these transformation rules: {{transformations}} to the extraction logic. Use Pandas or PySpark as appropriate."
+
+outputs:
+  - name: pipeline_code
+    type: string

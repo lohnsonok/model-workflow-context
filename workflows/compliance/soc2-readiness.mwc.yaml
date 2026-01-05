@@ -1,0 +1,25 @@
+name: "SOC2 Readiness Checklist"
+version: "1.0.0"
+description: "Generate a SOC2 Type 1/2 readiness checklist based on current technical practices"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: infra_summary
+    type: string
+    description: "Overview of infrastructure (AWS/GCP, DBs, Auth)"
+  - name: current_security_practices
+    type: string
+    description: "Current logging, monitoring, and access control methods"
+
+steps:
+  - id: analyze_gaps
+    type: model_call
+    prompt: "Compare {{infra_summary}} and {{current_security_practices}} against SOC2 Common Criteria. Identify major gaps in Security, Availability, and Confidentiality."
+
+  - id: generate_roadmap
+    type: model_call
+    prompt: "Create a prioritized roadmap to achieve SOC2 compliance based on: {{analyze_gaps}}."
+
+outputs:
+  - name: readiness_report
+    type: string

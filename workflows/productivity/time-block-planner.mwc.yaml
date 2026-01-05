@@ -1,0 +1,14 @@
+name: "Time Block Planner"
+version: "1.0.0"
+description: "Generate a daily time-blocking schedule based on tasks and energy levels"
+mwc_version: "1.0.0"
+inputs:
+  - name: tasks_and_meetings
+    type: string
+steps:
+  - id: create_schedule
+    type: model_call
+    prompt: "Design a 9-to-5 time-blocked schedule for: {{tasks_and_meetings}}. Group deep work in the morning."
+outputs:
+  - name: daily_schedule
+    type: string

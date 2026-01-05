@@ -1,0 +1,22 @@
+name: "Threat Modeling"
+version: "1.0.0"
+description: "Identify potential security threats and attack vectors for a specific feature or architecture"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: feature_design
+    type: string
+    description: "Detailed design or architecture of the feature"
+
+steps:
+  - id: identify_assets
+    type: model_call
+    prompt: "Identify the critical assets and entry points in this design: {{feature_design}}."
+
+  - id: analyze_threats
+    type: model_call
+    prompt: "Using the STRIDE model (Spoofing, Tampering, etc.), identify potential threats for each asset found in: {{identify_assets}}."
+
+outputs:
+  - name: threat_model_report
+    type: string

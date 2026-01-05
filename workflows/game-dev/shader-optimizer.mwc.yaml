@@ -1,0 +1,25 @@
+name: "Shader Optimizer"
+version: "1.0.0"
+description: "Optimize GLSL/HLSL shader code for performance and reduced instruction count"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: shader_code
+    type: string
+    description: "The raw GLSL or HLSL code"
+  - name: target_platform
+    type: string
+    description: "Mobile, PC, or Console"
+
+steps:
+  - id: identify_bottlenecks
+    type: model_call
+    prompt: "Analyze this shader for expensive operations (e.g., trigonometric functions, texture fetches in loops): {{shader_code}}."
+
+  - id: apply_optimizations
+    type: model_call
+    prompt: "Rewrite the shader to be more efficient on {{target_platform}}, reducing instruction count and memory bandwidth usage based on: {{identify_bottlenecks}}."
+
+outputs:
+  - name: optimized_shader
+    type: string

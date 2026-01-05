@@ -1,0 +1,27 @@
+name: "Docker File Generator"
+version: "1.0.0"
+description: "Generate optimized Dockerfile and docker-compose configurations"
+mwc_version: "1.0.0"
+
+inputs:
+  - name: project_type
+    type: string
+    description: "Language/Framework (e.g., Node.js, Python, Go)"
+  - name: requirements
+    type: string
+    description: "Package manager files (package.json, requirements.txt, etc.)"
+
+steps:
+  - id: generate_dockerfile
+    type: model_call
+    prompt: "Generate a multi-stage, secure, and optimized Dockerfile for a {{project_type}} project with these requirements:\n\n{{requirements}}"
+
+  - id: generate_compose
+    type: model_call
+    prompt: "Generate a docker-compose.yml file including the application and common dependencies (DB, Cache) for: {{project_type}}."
+
+outputs:
+  - name: dockerfile
+    type: string
+  - name: docker_compose
+    type: string
