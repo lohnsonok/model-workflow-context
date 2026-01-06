@@ -1,0 +1,806 @@
+name: "Enterprise Full-Stack Engineering Orchestrator (Node/Next/Flutter)"
+version: "8.0.0"
+description: "The definitive hyper-granular engineering blueprint to replicate high-performance multi-stack architectures. This workflow provides rigid constraints, exact file templates, and deep architectural enforcement for consistent multi-agent implementation, independent of specific business logic."
+mwc_version: "1.0.0"
+
+inputs:
+  - name: project_name
+    type: string
+    description: "The name of the project (slug format, e.g., my-app)"
+  - name: root_dir
+    type: path
+    description: "The destination path for the entire project"
+  - name: domain_entities
+    type: string
+    description: "Brief description of core entities (e.g., Queues and Tickets, or Products and Orders)"
+
+steps:
+  - id: stack_dependency_enforcement
+    type: model_call
+    prompt: |
+      Enforce the EXACT dependency versions from the `oquira-app` stack to ensure technical consistency across ALL layers.
+
+      ### 1. Global Tools & DevOps
+      - `typescript`: `^5.9.3` (Unified)
+      - `tailwindcss`: `^4.1.18` (Unified UI styling)
+      - `eslint`: `^9.39.2`
+      - `prettier`: `^3.7.4`
+
+      ### 2. Backend (Express + Inversify)
+      - `inversify`: `^6.0.2` (Verified common stable version, or check package.json if available)
+      - `prisma`: `^7.2.0`
+      - `@prisma/client`: `^7.2.0`
+      - `express`: `^5.2.1`
+      - `socket.io`: `^4.8.3`
+      - `ioredis`: `^5.8.2`
+      - `reflect-metadata`: `^0.2.2`
+
+      ### 3. Business Dashboard (Next.js 16)
+      - `next`: `16.1.1`
+      - `react`: `19.2.3`
+      - `react-dom`: `19.2.3`
+      - `zod`: `^4.3.4`
+      - `zustand`: `^5.0.9`
+      - `socket.io-client`: `^4.8.3`
+      - `@tanstack/react-query`: `^5.62.11`
+      - `next-intl`: `^3.26.0`
+
+      ### 4. Mobile (Flutter 3.x)
+      - `flutter_bloc`: `^9.1.1`
+      - `get_it`: `^9.2.0`
+      - `dio`: `^5.9.0`
+      - `go_router`: `^14.8.0`
+      - `shared_preferences`: `^2.5.4`
+      - `socket_io_client`: `^3.1.3`
+      - `flutter_screenutil`: `^5.9.3`
+      - `google_maps_flutter`: `^2.14.0`
+
+      ### 5. Documentation (Fumadocs)
+      - `fumadocs-core`: `^16.4.2`
+      - `fumadocs-ui`: `^16.4.2`
+      - `fumadocs-mdx`: `^14.2.4`
+      - `next`: `16.1.1`
+      - `react`: `^19.2.3`
+
+      ### 6. Marketing Website (Next.js)
+      - `next`: `16.1.1`
+      - `react`: `19.2.3`
+      - `framer-motion`: `^12.0.0`
+      - `next-intl`: `^4.7.0`
+      - `zustand`: `^5.0.9`
+      - `lucide-react`: `^0.562.0`
+
+      ### 7. Status Page (Gatus)
+      - Image: `twinproduction/gatus:latest`
+      - Config: `config.yaml`
+
+  - id: environment_configuration_blueprint
+    type: model_call
+    prompt: |
+      Define the mandatory environment variables for all layers.
+
+      ### 1. Backend (`.env`)
+      ```env
+      DATABASE_URL="postgresql://user:pass@localhost:5432/db"
+      REDIS_URL="redis://localhost:6379"
+      JWT_SECRET="your-super-secret"
+      PORT=4000
+      NODE_ENV="development"
+      ```
+
+      ### 2. Business Dashboard (`.env.local`)
+      ```env
+      BACKEND_URL="http://localhost:4000"
+      NEXT_PUBLIC_SOCKET_URL="http://localhost:4000"
+      ```
+
+      ### 3. Marketing Website (`.env`)
+      ```env
+      PUBLIC_SITE_URL="https://example.com"
+      PUBLIC_CONTACT_EMAIL="support@example.com"
+      ```
+
+      ### 4. Status Page (`config.yaml` env injection)
+      ```env
+      API_URL="http://backend:4000"
+      ```
+
+  - id: backend_architecture_scaffolding
+    type: model_call
+    prompt: |
+      Initialize the Hybrid Layered Architecture for the Express backend.
+      
+      ### 1. Directory Structure
+      ```text
+      src/
+      ├── api/              # Routes, DTOs, Validators
+      ├── controllers/      # Request Handlers
+      ├── services/         # Business Logic
+      ├── models/           # Data Models & Prisma Wrappers
+      ├── domain/           # Core Entities & Events
+      ├── infrastructure/   # External Services
+      ├── shared/           # Utils, Types, Config
+      └── middleware/       # Express Middleware
+      ```
+
+      ### 2. Prisma Schema Foundation
+      Define the core models in `prisma/schema.prisma`.
+      - Use `cuid()` for IDs.
+      - Implement `createdAt` and `updatedAt` timestamps for all models.
+      - Ensure proper relations and cascading deletes.
+
+  - id: backend_dependency_injection_system
+    type: model_call
+    prompt: |
+      Implement the Inversify Dependency Injection system. String literals are FORBIDDEN for injection.
+
+      ### 1. Symbols Definition (`src/shared/types/di.types.ts`)
+      Define symbols for all layers (Infrastructure, Repositories, Use Cases, Services, Controllers).
+      Example:
+      ```typescript
+      export const TYPES = {
+        PrismaClient: Symbol.for('PrismaClient'),
+        Logger: Symbol.for('Logger'),
+        // Repositories
+        UserRepository: Symbol.for('UserRepository'),
+        [Entity]Repository: Symbol.for('[Entity]Repository'),
+        // Use Cases
+        [Operation]UseCase: Symbol.for('[Operation]UseCase'),
+        // Services
+        AuthService: Symbol.for('AuthService'),
+        RealtimeService: Symbol.for('RealtimeService'),
+        // Controllers
+        [Entity]Controller: Symbol.for('[Entity]Controller'),
+      } as const;
+      ```
+
+      ### 2. Global Container Config (`src/container.ts`)
+      Configure the container with `Singleton` scope by default.
+      ```typescript
+      import 'reflect-metadata';
+      import { Container } from 'inversify';
+      import { TYPES } from './shared/types/di.types';
+      
+      const container = new Container({ defaultScope: 'Singleton' });
+      // Bindings here...
+      export { container };
+      ```
+
+  - id: backend_repository_implementation
+    type: model_call
+    prompt: |
+      Implement the Repository pattern to decouple Domain from Infrastructure.
+
+      ### 1. Base Repository Class
+      Create a generic base repository that handles common Prisma operations.
+      ```typescript
+      import { injectable, inject } from 'inversify';
+      import { PrismaClient } from '@prisma/client';
+      import { TYPES } from '@/shared/types/di.types';
+
+      @injectable()
+      export abstract class BaseRepository<T> {
+        @inject(TYPES.PrismaClient) protected readonly prisma!: PrismaClient;
+        constructor(protected readonly modelName: string) {}
+
+        async findById(id: string): Promise<T | null> {
+          return (this.prisma as any)[this.modelName].findUnique({ where: { id } });
+        }
+        
+        async findAll(params?: any): Promise<T[]> {
+          return (this.prisma as any)[this.modelName].findMany(params);
+        }
+
+        async create(data: any): Promise<T> {
+          return (this.prisma as any)[this.modelName].create({ data });
+        }
+
+        async update(id: string, data: any): Promise<T> {
+          return (this.prisma as any)[this.modelName].update({ where: { id }, data });
+        }
+
+        async delete(id: string): Promise<T> {
+          return (this.prisma as any)[this.modelName].delete({ where: { id } });
+        }
+      }
+      ```
+
+      ### 2. Concrete Repository Implementation
+      Every entity defined in `{{domain_entities}}` must have a corresponding repository implementing its interface.
+      ```typescript
+      @injectable()
+      export class [Entity]Repository extends BaseRepository<[Entity]> implements I[Entity]Repository {
+        constructor() { super('[entity]'); }
+        // Implement specific domain methods here
+      }
+      ```
+
+  - id: backend_business_logic_implementation
+    type: model_call
+    prompt: |
+      Implement the core business logic using Use Cases and Services.
+
+      ### 1. Complex Use Case Implementation
+      Use cases should coordinate multiple repositories and services.
+      ```typescript
+      @injectable()
+      export class [Action][Entity]UseCase {
+        constructor(
+          @inject(TYPES.[Entity]Service) private readonly service: I[Entity]Service,
+          @inject(TYPES.[Entity]Repository) private readonly repository: I[Entity]Repository,
+          @inject(TYPES.RealtimeService) private readonly realtime: IRealtimeService
+        ) {}
+
+        async execute(input: [Action][Entity]Dto): Promise<[Action][Entity]Result> {
+          logger.info('[UseCase] Executing operation', { input });
+          
+          const result = await this.service.process(input);
+          const entity = await this.repository.update(result.id, { status: 'completed' });
+          
+          this.realtime.emitToEntity(entity.id, '[entity]:updated', entity);
+          
+          return { entity, success: true };
+        }
+      }
+      ```
+
+  - id: backend_middleware_patterns
+    type: model_call
+    prompt: |
+      Middleware must be used for cross-cutting concerns. Sensitive fields must be sanitized in error responses.
+
+      ### 1. RBAC Middleware (`src/shared/middleware/rbac.middleware.ts`)
+      ```typescript
+      import { Request, Response, NextFunction } from 'express';
+      import { ForbiddenError, UnauthorizedError } from '@/shared/errors/app.error';
+
+      export enum Role {
+        USER = 'user',
+        OPERATOR = 'operator',
+        MANAGER = 'manager',
+        ADMIN = 'admin',
+      }
+
+      export const requireRole = (...roles: Role[]) => {
+        return (req: Request, res: Response, next: NextFunction) => {
+          const user = (req as any).user;
+          if (!user) throw new UnauthorizedError();
+          if (!roles.includes(user.role)) throw new ForbiddenError('Insufficient permissions');
+          next();
+        };
+      };
+      ```
+
+      ### 2. Global Error Handler (`src/shared/middleware/error-handler.middleware.ts`)
+      ```typescript
+      import { Request, Response, NextFunction } from 'express';
+      import { AppError } from '@/shared/errors/app.error';
+      import { logger } from '@/utils/logger';
+
+      export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
+        logger.error(err.message, { stack: err.stack, path: req.path });
+
+        if (err instanceof AppError) {
+          return res.status(err.statusCode).json({
+            success: false,
+            error: { code: err.errorCode, message: err.message }
+          });
+        }
+
+        // Sanitize internal errors in production
+        const message = process.env.NODE_ENV === 'production' 
+          ? 'Internal Server Error' 
+          : err.message;
+
+        res.status(500).json({
+          success: false,
+          error: { code: 'INTERNAL_ERROR', message }
+        });
+      };
+      ```
+
+  - id: backend_interface_definitions
+    type: model_call
+    prompt: |
+      Define clear interfaces for all services and repositories to facilitate DI and testing.
+
+      ### 1. Domain Repository Interface (`src/domain/repositories/[entity].repository.interface.ts`)
+      ```typescript
+      export interface I[Entity]Repository extends IBaseRepository<[Entity]> {
+        findByCustomCriteria(criteria: any): Promise<[Entity][]>;
+      }
+      ```
+
+      ### 2. Application Service Interface (`src/application/interfaces/[entity]-service.interface.ts`)
+      ```typescript
+      export interface I[Entity]Service {
+        process(data: [Action][Entity]Dto): Promise<[Entity]>;
+        validate(id: string): Promise<boolean>;
+      }
+      ```
+
+  - id: testing_strategy_and_templates
+    type: model_call
+    prompt: |
+      Quality is non-negotiable. 100% coverage for core Use Cases.
+
+      ### 1. Use Case Test Template (`src/application/use-cases/[action]-[entity].use-case.spec.ts`)
+      ```typescript
+      import { [Action][Entity]UseCase } from './[action]-[entity].use-case';
+      import { mock, MockProxy } from 'jest-mock-extended';
+
+      describe('[Action][Entity]UseCase', () => {
+        let useCase: [Action][Entity]UseCase;
+        let service: MockProxy<I[Entity]Service>;
+        let repository: MockProxy<I[Entity]Repository>;
+
+        beforeEach(() => {
+          service = mock<I[Entity]Service>();
+          repository = mock<I[Entity]Repository>();
+          useCase = new [Action][Entity]UseCase(service, repository);
+        });
+
+        it('should successfully execute the operation', async () => {
+          const input = { id: '123', data: {} };
+          service.process.mockResolvedValue({ id: '123' } as any);
+          
+          const result = await useCase.execute(input);
+
+          expect(result.success).toBe(true);
+          expect(service.process).toHaveBeenCalledWith(input);
+        });
+      });
+      ```
+
+  - id: infrastructure_realtime_socket_deep_dive
+    type: model_call
+    prompt: |
+      Realtime scaling with Socket.io and Redis.
+
+      ### 1. Socket Service Implementation (`src/infrastructure/realtime/socket.service.ts`)
+      ```typescript
+      @injectable()
+      export class SocketService implements IRealtimeService {
+        constructor(@inject(TYPES.SocketServer) private io: Server) {}
+
+        emitToEntity(entityId: string, event: string, payload: any): void {
+          this.io.to(`entity:${entityId}`).emit(event, payload);
+        }
+
+        emitToRoom(room: string, event: string, payload: any): void {
+          this.io.to(room).emit(event, payload);
+        }
+      }
+      ```
+
+      ### 2. Room Management Middleware
+      ```typescript
+      io.on('connection', (socket) => {
+        const userId = socket.handshake.auth.userId;
+        if (userId) socket.join(`user:${userId}`);
+
+        socket.on('join:room', (room) => {
+          socket.join(room);
+        });
+      });
+      ```
+
+  - id: mobile_feature_implementation
+    type: model_call
+    prompt: |
+      Feature-driven architecture for the mobile app using BLoC and Clean Architecture.
+
+      ### 1. Directory Structure (`lib/features/[feature_name]/`)
+      ```text
+      [feature_name]/
+      ├── data/
+      │   ├── datasources/
+      │   │   ├── [feature_name]_remote_datasource.dart
+      │   │   └── [feature_name]_local_datasource.dart
+      │   ├── models/
+      │   │   └── [entity]_model.dart
+      │   └── repositories/
+      │       └── [feature_name]_repository_impl.dart
+      ├── domain/
+      │   ├── entities/
+      │   │   └── [entity].dart
+      │   ├── repositories/
+      │   │   └── i_[feature_name]_repository.dart
+      │   └── usecases/
+      │       └── [action]_[entity]_usecase.dart
+      └── presentation/
+          ├── bloc/
+          │   ├── [feature_name]_bloc.dart
+          │   ├── [feature_name]_event.dart
+          │   └── [feature_name]_state.dart
+          ├── pages/
+          │   └── [feature_name]_page.dart
+          └── widgets/
+              └── [feature_name]_widget.dart
+      ```
+
+      ### 2. UseCase Implementation (Dart)
+      ```dart
+      class [Action][Entity]UseCase {
+        final I[FeatureName]Repository repository;
+        [Action][Entity]UseCase(this.repository);
+
+        Future<Either<Failure, [Entity]>> call([Action][Entity]Params params) async {
+          return await repository.[action][Entity](params);
+        }
+      }
+      ```
+
+  - id: prisma_seeding_and_migrations
+    type: model_call
+    prompt: |
+      Standardized database lifecycle management.
+
+      ### 1. Seed Script (`prisma/seed.ts`)
+      ```typescript
+      import { PrismaClient } from '@prisma/client';
+      const prisma = new PrismaClient();
+
+      async function main() {
+        const admin = await prisma.user.upsert({
+          where: { email: 'admin@{{project_slug}}.com' },
+          update: {},
+          create: {
+            email: 'admin@{{project_slug}}.com',
+            name: 'System Admin',
+            accountType: 'admin',
+          },
+        });
+
+        // Initialize core data structures based on domain_entities
+        console.log('Seed completed successfully');
+      }
+      ```
+
+  - id: business_proxy_and_api_enforcement
+    type: model_call
+    prompt: |
+      Enforce the security pattern for the Manager Dashboard. Direct backend calls from the client are FORBIDDEN.
+
+      ### 1. Next.js API Proxy (`src/app/api/proxy/[...path]/route.ts`)
+      Implement a secure proxy that forwards cookies and handles authentication.
+      - Extract `accessToken` from secure HttpOnly cookies.
+      - Forward request to `process.env.BACKEND_URL` with `Authorization: Bearer <token>`.
+      - Handle 401/403 responses by clearing local cookies.
+
+      ### 2. TanStack Query & Axios Config
+      Centralize API calls through a pre-configured Axios instance pointing to `/api/proxy`.
+      - Enable `withCredentials: true`.
+      - Implement global error interceptors for session expiry.
+
+  - id: mobile_bloc_architecture_enforcement
+    type: model_call
+    prompt: |
+      Replicate the Flutter architectural stack with GetIt and BLoC.
+
+      ### 1. Dependency Injection (`lib/core/di/injection.dart`)
+      Use GetIt for singleton registration of services, repositories, and BLoCs.
+
+      ### 2. Reactive State Management
+      Every feature must follow: `FeatureBloc` -> `FeatureEvent` -> `FeatureState`.
+      Use `HydratedBloc` for persistent states like Authentication.
+
+      ### 3. Networking
+      Use `Dio` with interceptors for JWT/Cookie management.
+
+  - id: ecosystem_realtime_sync
+    type: model_call
+    prompt: |
+      Implement real-time synchronization between Backend, Business Dashboard, and Mobile App using Socket.io.
+
+      ### 1. Backend Socket Service
+      Use a dedicated `RealtimeService` injected into Use Cases to emit events.
+
+      ### 2. Frontend/Mobile Listeners
+      Implement robust listeners with auto-reconnect and state synchronization logic.
+
+  - id: global_directory_structure_expansion
+    type: model_call
+    prompt: |
+      Expand the global directory structure to include documentation, marketing, and monitoring layers.
+
+      ### 1. Extended Hierarchy
+      ```text
+      /{{root_dir}}
+      ├── backend/            # Express API (src/api, src/services, src/models)
+      ├── business/           # Next.js Dashboard
+      ├── mobile/             # Flutter App (lib/features, lib/core)
+      ├── docs/               # Fumadocs Documentation
+      ├── website/            # Marketing Landing Page (Next.js)
+      ├── status/             # Gatus Status Page
+      └── infra/              # Docker, Terraform, K8s configs
+      ```
+
+  - id: docker_compose_orchestration
+    type: model_call
+    prompt: |
+      Implement a production-grade Docker Compose configuration to orchestrate all services.
+
+      ### 1. `docker-compose.yml` Blueprint
+      ```yaml
+      services:
+        db:
+          image: postgres:16-alpine
+          environment:
+            POSTGRES_USER: ${DB_USER:-user}
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-pass}
+            POSTGRES_DB: ${DB_NAME:-db}
+          ports:
+            - "5432:5432"
+          volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+        redis:
+          image: redis:7-alpine
+          ports:
+            - "6379:6379"
+
+        backend:
+          build: ./backend
+          environment:
+            DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+            REDIS_URL: redis://redis:6379
+          depends_on:
+            - db
+            - redis
+          ports:
+            - "4000:4000"
+
+        business:
+          build: ./business
+          environment:
+            BACKEND_URL: http://backend:4000
+          ports:
+            - "3000:3000"
+
+        website:
+          build: ./website
+          ports:
+            - "3001:3000"
+
+        docs:
+          build: ./docs
+          ports:
+            - "3002:3000"
+
+        status:
+          image: twinproduction/gatus
+          volumes:
+            - ./status/config.yaml:/config/config.yaml
+          ports:
+            - "3003:8080"
+          environment:
+            API_URL: http://backend:4000
+
+      volumes:
+        postgres_data:
+      ```
+
+  - id: docs_and_marketing_scaffolding
+    type: model_call
+    prompt: |
+      Initialize the documentation and marketing websites matching `oquira-app` stack.
+
+      ### 1. Documentation (`/docs`)
+      - Framework: **Next.js 16 + Fumadocs**.
+      - Configuration (`source.config.ts`):
+        ```typescript
+        import { defineDocs, defineConfig } from 'fumadocs-mdx/config';
+        export const { docs, meta } = defineDocs({
+          dir: 'content/docs',
+        });
+        export default defineConfig();
+        ```
+      - Structure: `app/layout.tsx` (RootLayout), `app/docs/[[...slug]]/page.tsx` (DocsPage).
+
+      ### 2. Marketing Website (`/website`)
+      - Framework: **Next.js 16 + Tailwind 4 + Framer Motion**.
+      - Features: `next-intl` for i18n (`messages/en.json`, `messages/fr.json`).
+      - Structure: `src/app/[locale]/page.tsx`.
+
+      ### 3. Status Page (`/status`)
+      - Tool: **Gatus** (Golang-based status page).
+      - Config (`config.yaml`):
+        ```yaml
+        ui:
+          title: "{{project_name}} Status"
+          header: "System Status"
+        endpoints:
+          - name: "API Health"
+            url: "${API_URL}/health"
+            interval: 30s
+            conditions:
+              - "[STATUS] == 200"
+        ```
+
+  - id: devops_production_readiness
+    type: model_call
+    prompt: |
+      Ensure the ecosystem is deployable at scale using Docker and CI/CD.
+
+      ### 1. Unified Service Health Monitoring
+      Every service (`backend`, `business`, `website`, `status`) MUST implement a `/health` endpoint for Docker healthchecks and monitoring.
+
+      ### 2. Global CI Pipeline (`.github/workflows/main.yml`)
+      ```yaml
+      name: Global CI/CD
+      on: [push]
+      jobs:
+        test-backend:
+          runs-on: ubuntu-latest
+          steps: [ ... ]
+        test-mobile:
+          runs-on: macos-latest
+          steps: [ ... ]
+        deploy-staging:
+          needs: [test-backend, test-mobile]
+          steps:
+            - name: Deploy to K8s/Docker Swarm
+              run: docker stack deploy -c docker-compose.yml {{project_slug}}
+      ```
+
+      ### 3. Multi-Stage Dockerfile (Backend)
+      ```dockerfile
+      FROM node:20-alpine AS builder
+      WORKDIR /app
+      COPY package*.json ./
+      RUN npm ci
+      COPY . .
+      RUN npx prisma generate
+      RUN npm run build
+
+      FROM node:20-alpine AS runner
+      WORKDIR /app
+      COPY --from=builder /app/dist ./dist
+      COPY --from=builder /app/node_modules ./node_modules
+      COPY --from=builder /app/prisma ./prisma
+      CMD ["npm", "run", "start"]
+      ```
+
+      ### 2. GitHub Actions (ci.yml)
+      ```yaml
+      name: CI
+      on: [push, pull_request]
+      jobs:
+        build:
+          runs-on: ubuntu-latest
+          steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+            - run: npm ci
+            - run: npm run lint
+            - run: npm test
+            - run: npm run build
+      ```
+
+  - id: backend_security_and_dto_enforcement
+    type: model_call
+    prompt: |
+      Enforce strict type safety and security at the boundary layer.
+
+      ### 1. Zod DTO Schemas (`src/api/dto/[entity].dto.ts`)
+      ```typescript
+      import { z } from 'zod';
+
+      export const Create[Entity]Schema = z.object({
+        name: z.string().min(2).max(100),
+        type: z.string(),
+        metadata: z.record(z.any()).optional(),
+      });
+
+      export type Create[Entity]Dto = z.infer<typeof Create[Entity]Schema>;
+      ```
+
+      ### 2. Standardized API Response
+      ```typescript
+      export interface ApiResponse<T> {
+        success: boolean;
+        data?: T;
+        error?: {
+          code: string;
+          message: string;
+          details?: any;
+        };
+      }
+      ```
+
+  - id: business_dashboard_i18n_manifesto
+    type: model_call
+    prompt: |
+      Implement a robust i18n system for the Manager Dashboard.
+
+      ### 1. Message Structure (`messages/fr.json`)
+      ```json
+      {
+        "common": {
+          "actions": {
+            "save": "Enregistrer",
+            "cancel": "Annuler",
+            "delete": "Supprimer",
+            "edit": "Modifier"
+          },
+          "status": {
+            "active": "Actif",
+            "inactive": "Inactif"
+          }
+        },
+        "dashboard": {
+          "title": "Tableau de bord",
+          "welcome": "Bienvenue, {name}",
+          "stats": {
+            "total": "Total",
+            "active": "Actif"
+          }
+        }
+      }
+      ```
+
+  - id: mobile_flutter_hydrated_bloc_auth
+    type: model_call
+    prompt: |
+      Implement persistent authentication state using `hydrated_bloc`.
+
+      ### 1. Auth BLoC Implementation
+      ```dart
+      class AuthBloc extends HydratedBloc<AuthEvent, AuthState> {
+        final IAuthRepository authRepository;
+
+        AuthBloc(this.authRepository) : super(AuthInitial()) {
+          on<LoginRequested>(_onLoginRequested);
+          on<LogoutRequested>(_onLogoutRequested);
+        }
+
+        Future<void> _onLoginRequested(LoginRequested event, Emitter<AuthState> emit) async {
+          emit(AuthLoading());
+          final result = await authRepository.login(event.email, event.password);
+          result.fold(
+            (failure) => emit(AuthError(failure.message)),
+            (user) => emit(Authenticated(user)),
+          );
+        }
+        // Implement fromJson and toJson for persistence
+      }
+      ```
+
+  - id: devops_security_and_production_hardening
+    type: model_call
+    prompt: |
+      Harden the production environment with security scans and performance optimizations.
+
+      ### 1. Security
+      - Implement Helmet, CORS, and Rate Limiting on the Backend.
+      - Use Zod for strict input validation.
+      - Add GitHub Actions for security scans (Snyk/Trivy).
+
+      ### 2. Performance
+      - Implement Redis caching for frequently accessed data.
+      - Optimize Docker images using multi-stage builds.
+
+  - id: final_quality_assurance_checklist
+    type: model_call
+    prompt: |
+      Final verification before ecosystem handoff.
+
+      ### 1. Technical Compliance
+      - [ ] All API routes protected by RBAC middleware.
+      - [ ] No direct Prisma calls in Controllers (Use Cases only).
+      - [ ] 100% test coverage for core Use Cases.
+      - [ ] All secrets managed via environment variables or secret manager.
+
+      ### 2. User Experience Audit
+      - [ ] Mobile app supports offline mode for core data.
+      - [ ] i18n support for French and English.
+      - [ ] Real-time updates verified across all platforms.
+
+outputs:
+  - name: ecosystem_manifesto
+    type: string
+    description: "The complete technical blueprint."
+  - name: validation_results
+    type: string
+    description: "Audit results and compliance score."
