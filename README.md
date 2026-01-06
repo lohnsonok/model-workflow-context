@@ -7,6 +7,10 @@ Open standard for defining, sharing, and executing workflows across AI-powered e
 - [Specification](SPECIFICATION.md)
 - [Browse Workflows](workflows/)
 
+## Featured Workflows
+- **[Enterprise Orchestrator](workflows/setup/fullstack-mobile-app-flutter-react-express.mwc.yaml)**: Our flagship hyper-granular blueprint for orchestrating complex enterprise stacks (Node/Express, Next.js 16, Flutter 3.x).
+- **[Onboarding Guide](workflows/setup/onboarding-guide.mwc.yaml)**: Automated generation of developer onboarding documentation.
+
 ## Supported Editors
 - Cursor
 - Windsurf
